@@ -1,0 +1,7 @@
+profile = "default"
+model_provider = "openai"
+model = "gpt-5.3-codex"
+model_reasoning_effort = "medium"
+
+# Tell codex what markers denote your project root
+project_root_markers = [".git", "AGENTS.md"]
