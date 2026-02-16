@@ -17,28 +17,25 @@ export type VocationalProgramLevel =
 // --------------------
 // Questions
 // --------------------
-
-export type MultipleChoiceQuestion = {
+export type BaseQuestion = {
   id: string;
-  type: "multiple-choice";
   text: string;
-  difficulty: Difficulty;
+  difficulty: Difficulty;  
+  ceIds: string[];
+};
+
+export type MultipleChoiceQuestion = BaseQuestion & {
+  type: "multiple-choice";
   options: Option[];
 };
 
-export type TrueFalseQuestion = {
-  id: string;
+export type TrueFalseQuestion = BaseQuestion & {
   type: "true-false";
-  text: string;
-  difficulty: Difficulty;
   correctAnswer: boolean;
 };
 
-export type ShortAnswerQuestion = {
-  id: string;
+export type ShortAnswerQuestion = BaseQuestion & {
   type: "short-answer";
-  text: string;
-  difficulty: Difficulty;
   expectedAnswer: string;
 };
 
