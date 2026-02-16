@@ -4,11 +4,6 @@
 
 export type Difficulty = "easy" | "medium" | "hard";
 
-export type QuestionType =
-  | "multiple-choice"
-  | "true-false"
-  | "short-answer";
-
 export type VocationalProgramLevel =
   | "basic"
   | "intermediate"
@@ -61,6 +56,7 @@ export type Exam = {
   difficulty: Difficulty;
   moduleId: string;
   questions: Question[];
+  createdAt?: Date;
 };
 
 // --------------------
