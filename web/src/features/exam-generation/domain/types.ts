@@ -3,6 +3,7 @@
 // --------------------
 
 export type Difficulty = "easy" | "medium" | "hard";
+export type QuestionIntent = "theoretical" | "practical";
 
 export type VocationalProgramLevel =
   | "basic"
@@ -17,6 +18,7 @@ export type BaseQuestion = {
   text: string;
   difficulty: Difficulty;  
   ceIds: string[];
+  intent: QuestionIntent;
 };
 
 export type MultipleChoiceQuestion = BaseQuestion & {
@@ -56,7 +58,16 @@ export type Exam = {
   difficulty: Difficulty;
   moduleId: string;
   questions: Question[];
+  distribution?: QuestionDistribution;
   createdAt?: Date;
+};
+
+export type QuestionDistribution = {
+  byCount?: {
+    theoreticalPct: number;
+    practicalPct: number;
+    tolerancePct?: number;
+  };
 };
 
 // --------------------

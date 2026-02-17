@@ -46,5 +46,50 @@ export function validateExam(exam: Exam): string[] {
     }
   }
 
+  if (exam.distribution?.byCount) {
+    const { theoreticalPct, practicalPct, tolerancePct = 0 } = exam.distribution.byCount;
+
+    if (!Number.isFinite(theoreticalPct) || theoreticalPct < 0 || theoreticalPct > 100) {
+      errors.push("distribution.byCount.theoreticalPct must be between 0 and 100.");
+    }
+
+    if (!Number.isFinite(practicalPct) || practicalPct < 0 || practicalPct > 100) {
+      errors.push("distribution.byCount.practicalPct must be between 0 and 100.");
+    }
+
+    if (!Number.isFinite(tolerancePct) || tolerancePct < 0 || tolerancePct > 100) {
+      errors.push("distribution.byCount.tolerancePct must be between 0 and 100.");
+    }
+
+    if (theoreticalPct + practicalPct !== 100) {
+      errors.push("distribution.byCount percentages must add up to 100.");
+    }
+
+    const totalQuestions = exam.questions.length;
+    const theoreticalCount = exam.questions.filter(
+      (question) => question.intent === "theoretical",
+    ).length;
+    const practicalCount = totalQuestions - theoreticalCount;
+
+    const actualTheoreticalPct = (theoreticalCount / totalQuestions) * 100;
+    const actualPracticalPct = (practicalCount / totalQuestions) * 100;
+
+    if (Math.abs(actualTheoreticalPct - theoreticalPct) > tolerancePct) {
+      errors.push(
+        `Theoretical questions percentage (${actualTheoreticalPct.toFixed(
+          2,
+        )}%) is outside allowed tolerance.`,
+      );
+    }
+
+    if (Math.abs(actualPracticalPct - practicalPct) > tolerancePct) {
+      errors.push(
+        `Practical questions percentage (${actualPracticalPct.toFixed(
+          2,
+        )}%) is outside allowed tolerance.`,
+      );
+    }
+  }
+
   return errors;
 }

@@ -16,6 +16,7 @@ function buildValidExam(): Exam {
         text: "Which one is correct?",
         difficulty: "easy",
         ceIds: ["ce-1"],
+        intent: "theoretical",
         options: [
           { id: "o-1", text: "A", isCorrect: true },
           { id: "o-2", text: "B", isCorrect: false },
@@ -70,8 +71,34 @@ describe("POST /api/exams/validate", () => {
               text: "Bad shape question",
               difficulty: "easy",
               ceIds: ["ce-1"],
+              intent: "theoretical",
             },
           ],
+        },
+      }),
+      headers: { "content-type": "application/json" },
+    });
+
+    const response = await POST(request);
+    const body = await response.json();
+
+    expect(response.status).toBe(400);
+    expect(body).toEqual({ error: "Invalid request body. Expected { exam }." });
+  });
+
+  it("returns 400 when distribution shape is invalid", async () => {
+    const exam = buildValidExam();
+    const request = new Request("http://localhost/api/exams/validate", {
+      method: "POST",
+      body: JSON.stringify({
+        exam: {
+          ...exam,
+          distribution: {
+            byCount: {
+              theoreticalPct: "50",
+              practicalPct: 50,
+            },
+          },
         },
       }),
       headers: { "content-type": "application/json" },

@@ -6,6 +6,7 @@ import type {
   Exam,
   Option,
   Question,
+  QuestionIntent,
 } from "@/features/exam-generation/domain/types";
 
 type ValidateExamRequestBody = {
@@ -14,6 +15,10 @@ type ValidateExamRequestBody = {
 
 function isDifficulty(value: unknown): value is Difficulty {
   return value === "easy" || value === "medium" || value === "hard";
+}
+
+function isQuestionIntent(value: unknown): value is QuestionIntent {
+  return value === "theoretical" || value === "practical";
 }
 
 function isOption(value: unknown): value is Option {
@@ -37,6 +42,7 @@ function isQuestion(value: unknown): value is Question {
     text?: unknown;
     difficulty?: unknown;
     ceIds?: unknown;
+    intent?: unknown;
     options?: unknown;
     correctAnswer?: unknown;
     expectedAnswer?: unknown;
@@ -47,6 +53,7 @@ function isQuestion(value: unknown): value is Question {
     typeof candidate.text === "string" &&
     isDifficulty(candidate.difficulty) &&
     Array.isArray(candidate.ceIds) &&
+    isQuestionIntent(candidate.intent) &&
     candidate.ceIds.every((ceId) => typeof ceId === "string");
 
   if (!hasCommonFields) {
@@ -80,7 +87,37 @@ function isExam(value: unknown): value is Exam {
     difficulty?: unknown;
     moduleId?: unknown;
     questions?: unknown;
+    distribution?: unknown;
   };
+
+  const hasValidDistribution =
+    candidate.distribution === undefined ||
+    (typeof candidate.distribution === "object" &&
+      candidate.distribution !== null &&
+      ((candidate.distribution as { byCount?: unknown }).byCount === undefined ||
+        (typeof (candidate.distribution as { byCount?: unknown }).byCount ===
+          "object" &&
+          (candidate.distribution as { byCount?: unknown }).byCount !== null &&
+          typeof (
+            (candidate.distribution as { byCount?: unknown }).byCount as {
+              theoreticalPct?: unknown;
+            }
+          ).theoreticalPct === "number" &&
+          typeof (
+            (candidate.distribution as { byCount?: unknown }).byCount as {
+              practicalPct?: unknown;
+            }
+          ).practicalPct === "number" &&
+          ((
+            (candidate.distribution as { byCount?: unknown }).byCount as {
+              tolerancePct?: unknown;
+            }
+          ).tolerancePct === undefined ||
+            typeof (
+              (candidate.distribution as { byCount?: unknown }).byCount as {
+                tolerancePct?: unknown;
+              }
+            ).tolerancePct === "number"))));
 
   return (
     typeof candidate.id === "string" &&
@@ -90,7 +127,8 @@ function isExam(value: unknown): value is Exam {
     isDifficulty(candidate.difficulty) &&
     typeof candidate.moduleId === "string" &&
     Array.isArray(candidate.questions) &&
-    candidate.questions.every(isQuestion)
+    candidate.questions.every(isQuestion) &&
+    hasValidDistribution
   );
 }
 
