@@ -6,6 +6,7 @@ export type BaseQuestion = {
   difficulty: Difficulty;
   ceIds: string[];
   intent: QuestionIntent;
+  points?: number;
 };
 
 export type MultipleChoiceQuestion = BaseQuestion & {

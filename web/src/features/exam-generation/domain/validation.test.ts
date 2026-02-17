@@ -87,6 +87,15 @@ describe("validateExam", () => {
     );
   });
 
+  it("fails when question points are not greater than 0", () => {
+    const exam = buildBaseExam();
+    exam.questions[0].points = 0;
+
+    const errors = validateExam(exam);
+
+    expect(errors).toContain("Question q-1 points must be greater than 0.");
+  });
+
   it("fails when question IDs are duplicated", () => {
     const exam = buildBaseExam();
     exam.questions.push({

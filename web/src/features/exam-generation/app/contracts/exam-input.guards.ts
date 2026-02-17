@@ -1,4 +1,4 @@
-import type { GenerateExamUseCaseInput } from "../generate-exam.use-case";
+import type { GenerateExamUseCaseInput } from "./generate-exam.contracts";
 import type {
   Difficulty,
   Exam,
@@ -42,6 +42,7 @@ export function isQuestion(value: unknown): value is Question {
     difficulty?: unknown;
     ceIds?: unknown;
     intent?: unknown;
+    points?: unknown;
     options?: unknown;
     correctAnswer?: unknown;
     expectedAnswer?: unknown;
@@ -53,6 +54,8 @@ export function isQuestion(value: unknown): value is Question {
     isDifficulty(candidate.difficulty) &&
     Array.isArray(candidate.ceIds) &&
     isQuestionIntent(candidate.intent) &&
+    (candidate.points === undefined ||
+      (typeof candidate.points === "number" && Number.isFinite(candidate.points))) &&
     candidate.ceIds.every((ceId) => typeof ceId === "string");
 
   if (!hasCommonFields) {
@@ -159,7 +162,88 @@ export function isGenerateExamUseCaseInput(
     questionCount?: unknown;
     availableQuestions?: unknown;
     distribution?: unknown;
+    learningOutcomes?: unknown;
+    assessmentCriteria?: unknown;
+    coverageWeights?: unknown;
   };
+
+  const hasValidLearningOutcomes =
+    candidate.learningOutcomes === undefined ||
+    (Array.isArray(candidate.learningOutcomes) &&
+      candidate.learningOutcomes.every(
+        (learningOutcome) =>
+          typeof learningOutcome === "object" &&
+          learningOutcome !== null &&
+          typeof (learningOutcome as { id?: unknown }).id === "string" &&
+          typeof (learningOutcome as { moduleId?: unknown }).moduleId === "string" &&
+          typeof (learningOutcome as { description?: unknown }).description === "string",
+      ));
+
+  const hasValidAssessmentCriteria =
+    candidate.assessmentCriteria === undefined ||
+    (Array.isArray(candidate.assessmentCriteria) &&
+      candidate.assessmentCriteria.every(
+        (assessmentCriterion) =>
+          typeof assessmentCriterion === "object" &&
+          assessmentCriterion !== null &&
+          typeof (assessmentCriterion as { id?: unknown }).id === "string" &&
+          typeof (
+            assessmentCriterion as { learningOutcomeId?: unknown }
+          ).learningOutcomeId === "string" &&
+          typeof (
+            assessmentCriterion as { description?: unknown }
+          ).description === "string",
+      ));
+
+  const hasValidCoverageWeights =
+    candidate.coverageWeights === undefined ||
+    (typeof candidate.coverageWeights === "object" &&
+      candidate.coverageWeights !== null &&
+      ((
+        candidate.coverageWeights as { learningOutcomeWeights?: unknown }
+      ).learningOutcomeWeights === undefined ||
+        (Array.isArray(
+          (candidate.coverageWeights as { learningOutcomeWeights?: unknown })
+            .learningOutcomeWeights,
+        ) &&
+          (
+            (candidate.coverageWeights as { learningOutcomeWeights?: unknown })
+              .learningOutcomeWeights as unknown[]
+          ).every(
+            (weight) =>
+              typeof weight === "object" &&
+              weight !== null &&
+              typeof (weight as { learningOutcomeId?: unknown }).learningOutcomeId ===
+                "string" &&
+              typeof (weight as { percentage?: unknown }).percentage === "number",
+          ))) &&
+      ((
+        candidate.coverageWeights as { assessmentCriterionWeights?: unknown }
+      ).assessmentCriterionWeights === undefined ||
+        (Array.isArray(
+          (
+            candidate.coverageWeights as {
+              assessmentCriterionWeights?: unknown;
+            }
+          ).assessmentCriterionWeights,
+        ) &&
+          (
+            (
+              candidate.coverageWeights as {
+                assessmentCriterionWeights?: unknown;
+              }
+            ).assessmentCriterionWeights as unknown[]
+          ).every(
+            (weight) =>
+              typeof weight === "object" &&
+              weight !== null &&
+              typeof (
+                weight as { assessmentCriterionId?: unknown }
+              ).assessmentCriterionId === "string" &&
+              typeof (
+                weight as { percentageWithinLearningOutcome?: unknown }
+              ).percentageWithinLearningOutcome === "number",
+          ))));
 
   return (
     typeof candidate.examId === "string" &&
@@ -170,6 +254,9 @@ export function isGenerateExamUseCaseInput(
     Array.isArray(candidate.availableQuestions) &&
     candidate.availableQuestions.every(isQuestion) &&
     (candidate.distribution === undefined ||
-      isQuestionDistribution(candidate.distribution))
+      isQuestionDistribution(candidate.distribution)) &&
+    hasValidLearningOutcomes &&
+    hasValidAssessmentCriteria &&
+    hasValidCoverageWeights
   );
 }

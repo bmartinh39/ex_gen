@@ -7,6 +7,13 @@ export function validateQuestion(question: Question): string[] {
     errors.push(`Question ${question.id} must reference at least one CE.`);
   }
 
+  if (
+    question.points !== undefined &&
+    (!Number.isFinite(question.points) || question.points <= 0)
+  ) {
+    errors.push(`Question ${question.id} points must be greater than 0.`);
+  }
+
   if (question.type === "multiple-choice") {
     if (!question.options || question.options.length < 2) {
       errors.push(
