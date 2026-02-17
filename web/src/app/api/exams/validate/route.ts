@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { validateExam } from "@/features/exam-generation/domain/validation";
+import { validateExamUseCase } from "@/features/exam-generation/app/validate-exam.use-case";
 import type {
   Difficulty,
   Exam,
@@ -119,6 +119,6 @@ export async function POST(request: Request) {
     );
   }
 
-  const errors = validateExam(body.exam);
-  return NextResponse.json({ errors }, { status: 200 });
+  const output = validateExamUseCase({ exam: body.exam });
+  return NextResponse.json(output, { status: 200 });
 }
