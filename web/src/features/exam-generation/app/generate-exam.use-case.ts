@@ -70,6 +70,7 @@ export function generateExamUseCase(
     name: input.name,
     moduleId: input.moduleId,
     difficulty: input.difficulty,
+    timeLimitMinutes: input.timeLimitMinutes,
     questions: selectionResult.questions,
     distribution: input.distribution,
   };

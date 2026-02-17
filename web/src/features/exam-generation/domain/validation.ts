@@ -35,6 +35,13 @@ export function validateQuestion(question: Question): string[] {
 export function validateExam(exam: Exam): string[] {
   const errors: string[] = [];
 
+  if (
+    exam.timeLimitMinutes !== undefined &&
+    (!Number.isFinite(exam.timeLimitMinutes) || exam.timeLimitMinutes <= 0)
+  ) {
+    errors.push("Exam timeLimitMinutes must be greater than 0.");
+  }
+
   if (!exam.questions || exam.questions.length < 1) {
     errors.push("Exam must contain at least 1 question.");
     return errors;

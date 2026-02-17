@@ -118,6 +118,7 @@ export function isExam(value: unknown): value is Exam {
     description?: unknown;
     difficulty?: unknown;
     moduleId?: unknown;
+    timeLimitMinutes?: unknown;
     questions?: unknown;
     distribution?: unknown;
   };
@@ -129,6 +130,10 @@ export function isExam(value: unknown): value is Exam {
       typeof candidate.description === "string") &&
     isDifficulty(candidate.difficulty) &&
     typeof candidate.moduleId === "string" &&
+    (candidate.timeLimitMinutes === undefined ||
+      (typeof candidate.timeLimitMinutes === "number" &&
+        Number.isFinite(candidate.timeLimitMinutes) &&
+        candidate.timeLimitMinutes > 0)) &&
     Array.isArray(candidate.questions) &&
     candidate.questions.every(isQuestion) &&
     (candidate.distribution === undefined ||
@@ -159,6 +164,7 @@ export function isGenerateExamUseCaseInput(
     name?: unknown;
     moduleId?: unknown;
     difficulty?: unknown;
+    timeLimitMinutes?: unknown;
     questionCount?: unknown;
     availableQuestions?: unknown;
     distribution?: unknown;
@@ -253,6 +259,10 @@ export function isGenerateExamUseCaseInput(
     typeof candidate.name === "string" &&
     typeof candidate.moduleId === "string" &&
     isDifficulty(candidate.difficulty) &&
+    (candidate.timeLimitMinutes === undefined ||
+      (typeof candidate.timeLimitMinutes === "number" &&
+        Number.isFinite(candidate.timeLimitMinutes) &&
+        candidate.timeLimitMinutes > 0)) &&
     typeof candidate.questionCount === "number" &&
     Array.isArray(candidate.availableQuestions) &&
     candidate.availableQuestions.every(isQuestion) &&

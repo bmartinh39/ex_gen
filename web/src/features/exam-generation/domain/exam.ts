@@ -49,6 +49,7 @@ export type Exam = {
   description?: string;
   difficulty: Difficulty;
   moduleId: string;
+  timeLimitMinutes?: number;
   questions: Question[];
   distribution?: QuestionDistribution;
   createdAt?: Date;

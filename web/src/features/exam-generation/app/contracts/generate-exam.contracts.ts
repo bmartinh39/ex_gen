@@ -28,6 +28,7 @@ export type GenerateExamUseCaseInput = {
   name: string;
   moduleId: string;
   difficulty: Difficulty;
+  timeLimitMinutes?: number;
   questionCount: number;
   availableQuestions: Question[];
   distribution?: QuestionDistribution;
