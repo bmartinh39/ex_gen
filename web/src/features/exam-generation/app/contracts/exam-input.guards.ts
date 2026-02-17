@@ -241,6 +241,9 @@ export function isGenerateExamUseCaseInput(
                 weight as { assessmentCriterionId?: unknown }
               ).assessmentCriterionId === "string" &&
               typeof (
+                weight as { learningOutcomeId?: unknown }
+              ).learningOutcomeId === "string" &&
+              typeof (
                 weight as { percentageWithinLearningOutcome?: unknown }
               ).percentageWithinLearningOutcome === "number",
           ))));

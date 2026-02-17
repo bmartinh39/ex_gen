@@ -13,6 +13,7 @@ export type LearningOutcomeWeight = {
 };
 
 export type AssessmentCriterionWeight = {
+  learningOutcomeId: string;
   assessmentCriterionId: string;
   percentageWithinLearningOutcome: number;
 };
