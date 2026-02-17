@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { validateExam } from "./validation";
-import type { Exam } from "./types";
+import type { Exam } from "./exam";
 
 function buildBaseExam(): Exam {
   return {

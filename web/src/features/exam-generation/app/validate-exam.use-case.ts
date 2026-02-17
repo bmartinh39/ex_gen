@@ -1,5 +1,5 @@
 import { validateExam } from "../domain/validation";
-import type { Exam } from "../domain/types";
+import type { Exam } from "../domain";
 
 export type ValidateExamUseCaseInput = {
   exam: Exam;

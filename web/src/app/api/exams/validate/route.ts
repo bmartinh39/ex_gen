@@ -7,7 +7,7 @@ import type {
   Option,
   Question,
   QuestionIntent,
-} from "@/features/exam-generation/domain/types";
+} from "@/features/exam-generation/domain";
 
 type ValidateExamRequestBody = {
   exam: Exam;

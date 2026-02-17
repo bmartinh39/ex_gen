@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { POST } from "./route";
-import type { Exam } from "@/features/exam-generation/domain/types";
+import type { Exam } from "@/features/exam-generation/domain";
 
 function buildValidExam(): Exam {
   return {

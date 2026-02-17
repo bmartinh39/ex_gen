@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { validateExamUseCase } from "./validate-exam.use-case";
-import type { Exam } from "../domain/types";
+import type { Exam } from "../domain";
 
 describe("validateExamUseCase", () => {
   it("returns domain validation errors", () => {

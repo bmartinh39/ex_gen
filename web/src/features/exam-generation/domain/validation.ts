@@ -1,4 +1,4 @@
-import type { Exam, Question } from "./types";
+import type { Exam, Question } from "./exam";
 
 export function validateQuestion(question: Question): string[] {
   const errors: string[] = [];
