@@ -106,4 +106,54 @@ describe("POST /api/exams/generate", () => {
     expect(body.exam).toBeDefined();
     expect(body.exam.questions).toHaveLength(4);
   });
+
+  it("returns 200 when generating from in-memory module context", async () => {
+    const request = new Request("http://localhost/api/exams/generate", {
+      method: "POST",
+      body: JSON.stringify({
+        examId: "exam-module-1",
+        name: "Generated from module",
+        moduleId: "module-1",
+        difficulty: "easy",
+        questionCount: 4,
+        distribution: {
+          byCount: {
+            theoreticalPct: 50,
+            practicalPct: 50,
+            tolerancePct: 50,
+          },
+        },
+      }),
+      headers: { "content-type": "application/json" },
+    });
+
+    const response = await POST(request);
+    const body = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(body.exam).toBeDefined();
+    expect(body.exam.questions).toHaveLength(4);
+  });
+
+  it("returns 404 when module context is not found in memory", async () => {
+    const request = new Request("http://localhost/api/exams/generate", {
+      method: "POST",
+      body: JSON.stringify({
+        examId: "exam-module-missing",
+        name: "Missing module",
+        moduleId: "module-999",
+        difficulty: "easy",
+        questionCount: 4,
+      }),
+      headers: { "content-type": "application/json" },
+    });
+
+    const response = await POST(request);
+    const body = await response.json();
+
+    expect(response.status).toBe(404);
+    expect(body).toEqual({
+      error: "No in-memory curriculum data found for module 'module-999'.",
+    });
+  });
 });

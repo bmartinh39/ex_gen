@@ -1,4 +1,7 @@
-import type { GenerateExamUseCaseInput } from "./generate-exam.contracts";
+import type {
+  GenerateExamFromModuleInput,
+  GenerateExamUseCaseInput,
+} from "./generate-exam.contracts";
 import type {
   Difficulty,
   Exam,
@@ -270,6 +273,93 @@ export function isGenerateExamUseCaseInput(
       isQuestionDistribution(candidate.distribution)) &&
     hasValidLearningOutcomes &&
     hasValidAssessmentCriteria &&
+    hasValidCoverageWeights
+  );
+}
+
+export function isGenerateExamFromModuleInput(
+  value: unknown,
+): value is GenerateExamFromModuleInput {
+  if (typeof value !== "object" || value === null) {
+    return false;
+  }
+
+  const candidate = value as {
+    examId?: unknown;
+    name?: unknown;
+    moduleId?: unknown;
+    difficulty?: unknown;
+    timeLimitMinutes?: unknown;
+    questionCount?: unknown;
+    distribution?: unknown;
+    coverageWeights?: unknown;
+  };
+
+  const hasValidCoverageWeights =
+    candidate.coverageWeights === undefined ||
+    (typeof candidate.coverageWeights === "object" &&
+      candidate.coverageWeights !== null &&
+      ((
+        candidate.coverageWeights as { learningOutcomeWeights?: unknown }
+      ).learningOutcomeWeights === undefined ||
+        (Array.isArray(
+          (candidate.coverageWeights as { learningOutcomeWeights?: unknown })
+            .learningOutcomeWeights,
+        ) &&
+          (
+            (candidate.coverageWeights as { learningOutcomeWeights?: unknown })
+              .learningOutcomeWeights as unknown[]
+          ).every(
+            (weight) =>
+              typeof weight === "object" &&
+              weight !== null &&
+              typeof (weight as { learningOutcomeId?: unknown }).learningOutcomeId ===
+                "string" &&
+              typeof (weight as { percentage?: unknown }).percentage === "number",
+          ))) &&
+      ((
+        candidate.coverageWeights as { assessmentCriterionWeights?: unknown }
+      ).assessmentCriterionWeights === undefined ||
+        (Array.isArray(
+          (
+            candidate.coverageWeights as {
+              assessmentCriterionWeights?: unknown;
+            }
+          ).assessmentCriterionWeights,
+        ) &&
+          (
+            (
+              candidate.coverageWeights as {
+                assessmentCriterionWeights?: unknown;
+              }
+            ).assessmentCriterionWeights as unknown[]
+          ).every(
+            (weight) =>
+              typeof weight === "object" &&
+              weight !== null &&
+              typeof (
+                weight as { assessmentCriterionId?: unknown }
+              ).assessmentCriterionId === "string" &&
+              typeof (
+                weight as { learningOutcomeId?: unknown }
+              ).learningOutcomeId === "string" &&
+              typeof (
+                weight as { percentageWithinLearningOutcome?: unknown }
+              ).percentageWithinLearningOutcome === "number",
+          ))));
+
+  return (
+    typeof candidate.examId === "string" &&
+    typeof candidate.name === "string" &&
+    typeof candidate.moduleId === "string" &&
+    isDifficulty(candidate.difficulty) &&
+    (candidate.timeLimitMinutes === undefined ||
+      (typeof candidate.timeLimitMinutes === "number" &&
+        Number.isFinite(candidate.timeLimitMinutes) &&
+        candidate.timeLimitMinutes > 0)) &&
+    typeof candidate.questionCount === "number" &&
+    (candidate.distribution === undefined ||
+      isQuestionDistribution(candidate.distribution)) &&
     hasValidCoverageWeights
   );
 }

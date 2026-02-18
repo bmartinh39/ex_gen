@@ -41,3 +41,14 @@ export type GenerateExamUseCaseOutput = {
   exam?: Exam;
   errors: string[];
 };
+
+export type GenerateExamFromModuleInput = {
+  examId: string;
+  name: string;
+  moduleId: string;
+  difficulty: Difficulty;
+  timeLimitMinutes?: number;
+  questionCount: number;
+  distribution?: QuestionDistribution;
+  coverageWeights?: CoverageWeights;
+};
