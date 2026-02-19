@@ -7,6 +7,13 @@ import type {
   QuestionDistribution,
   QuestionIntent,
 } from "../../domain";
+import { isAssessmentCriterion, isLearningOutcome } from "./curriculum.guards";
+import { isCoverageWeights } from "./coverage-weights.guards";
+import {
+  isFiniteNumber,
+  isObjectRecord,
+  isPositiveFiniteNumber,
+} from "./guard-helpers";
 
 export type ValidateExamRequestBody = {
   exam: Exam;
@@ -22,31 +29,19 @@ export function isQuestionIntent(value: unknown): value is QuestionIntent {
 
 export function isOption(value: unknown): value is Option {
   return (
-    typeof value === "object" &&
-    value !== null &&
-    typeof (value as { id?: unknown }).id === "string" &&
-    typeof (value as { text?: unknown }).text === "string" &&
-    typeof (value as { isCorrect?: unknown }).isCorrect === "boolean"
+    isObjectRecord(value) &&
+    typeof value.id === "string" &&
+    typeof value.text === "string" &&
+    typeof value.isCorrect === "boolean"
   );
 }
 
 export function isQuestion(value: unknown): value is Question {
-  if (typeof value !== "object" || value === null) {
+  if (!isObjectRecord(value)) {
     return false;
   }
 
-  const candidate = value as {
-    type?: unknown;
-    id?: unknown;
-    text?: unknown;
-    difficulty?: unknown;
-    ceIds?: unknown;
-    intent?: unknown;
-    points?: unknown;
-    options?: unknown;
-    correctAnswer?: unknown;
-    expectedAnswer?: unknown;
-  };
+  const candidate = value;
 
   const hasCommonFields =
     typeof candidate.id === "string" &&
@@ -54,8 +49,7 @@ export function isQuestion(value: unknown): value is Question {
     isDifficulty(candidate.difficulty) &&
     Array.isArray(candidate.ceIds) &&
     isQuestionIntent(candidate.intent) &&
-    (candidate.points === undefined ||
-      (typeof candidate.points === "number" && Number.isFinite(candidate.points))) &&
+    (candidate.points === undefined || isFiniteNumber(candidate.points)) &&
     candidate.ceIds.every((ceId) => typeof ceId === "string");
 
   if (!hasCommonFields) {
@@ -80,48 +74,34 @@ export function isQuestion(value: unknown): value is Question {
 export function isQuestionDistribution(
   value: unknown,
 ): value is QuestionDistribution {
-  if (typeof value !== "object" || value === null) {
+  if (!isObjectRecord(value)) {
     return false;
   }
 
-  const candidate = value as { byCount?: unknown };
+  const candidate = value;
   if (candidate.byCount === undefined) {
     return true;
   }
 
-  if (typeof candidate.byCount !== "object" || candidate.byCount === null) {
+  if (!isObjectRecord(candidate.byCount)) {
     return false;
   }
 
-  const byCount = candidate.byCount as {
-    theoreticalPct?: unknown;
-    practicalPct?: unknown;
-    tolerancePct?: unknown;
-  };
+  const byCount = candidate.byCount;
 
   return (
-    typeof byCount.theoreticalPct === "number" &&
-    typeof byCount.practicalPct === "number" &&
-    (byCount.tolerancePct === undefined ||
-      typeof byCount.tolerancePct === "number")
+    isFiniteNumber(byCount.theoreticalPct) &&
+    isFiniteNumber(byCount.practicalPct) &&
+    (byCount.tolerancePct === undefined || isFiniteNumber(byCount.tolerancePct))
   );
 }
 
 export function isExam(value: unknown): value is Exam {
-  if (typeof value !== "object" || value === null) {
+  if (!isObjectRecord(value)) {
     return false;
   }
 
-  const candidate = value as {
-    id?: unknown;
-    name?: unknown;
-    description?: unknown;
-    difficulty?: unknown;
-    moduleId?: unknown;
-    timeLimitMinutes?: unknown;
-    questions?: unknown;
-    distribution?: unknown;
-  };
+  const candidate = value;
 
   return (
     typeof candidate.id === "string" &&
@@ -131,9 +111,7 @@ export function isExam(value: unknown): value is Exam {
     isDifficulty(candidate.difficulty) &&
     typeof candidate.moduleId === "string" &&
     (candidate.timeLimitMinutes === undefined ||
-      (typeof candidate.timeLimitMinutes === "number" &&
-        Number.isFinite(candidate.timeLimitMinutes) &&
-        candidate.timeLimitMinutes > 0)) &&
+      isPositiveFiniteNumber(candidate.timeLimitMinutes)) &&
     Array.isArray(candidate.questions) &&
     candidate.questions.every(isQuestion) &&
     (candidate.distribution === undefined ||
@@ -145,114 +123,34 @@ export function isValidateExamRequestBody(
   value: unknown,
 ): value is ValidateExamRequestBody {
   return (
-    typeof value === "object" &&
-    value !== null &&
+    isObjectRecord(value) &&
     "exam" in value &&
-    isExam((value as { exam?: unknown }).exam)
+    isExam(value.exam)
   );
 }
 
 export function isGenerateExamUseCaseInput(
   value: unknown,
 ): value is GenerateExamUseCaseInput {
-  if (typeof value !== "object" || value === null) {
+  if (!isObjectRecord(value)) {
     return false;
   }
 
-  const candidate = value as {
-    examId?: unknown;
-    name?: unknown;
-    moduleId?: unknown;
-    difficulty?: unknown;
-    timeLimitMinutes?: unknown;
-    questionCount?: unknown;
-    availableQuestions?: unknown;
-    distribution?: unknown;
-    learningOutcomes?: unknown;
-    assessmentCriteria?: unknown;
-    coverageWeights?: unknown;
-  };
+  const candidate = value;
 
   const hasValidLearningOutcomes =
     candidate.learningOutcomes === undefined ||
     (Array.isArray(candidate.learningOutcomes) &&
-      candidate.learningOutcomes.every(
-        (learningOutcome) =>
-          typeof learningOutcome === "object" &&
-          learningOutcome !== null &&
-          typeof (learningOutcome as { id?: unknown }).id === "string" &&
-          typeof (learningOutcome as { moduleId?: unknown }).moduleId === "string" &&
-          typeof (learningOutcome as { description?: unknown }).description === "string",
-      ));
+      candidate.learningOutcomes.every(isLearningOutcome));
 
   const hasValidAssessmentCriteria =
     candidate.assessmentCriteria === undefined ||
     (Array.isArray(candidate.assessmentCriteria) &&
-      candidate.assessmentCriteria.every(
-        (assessmentCriterion) =>
-          typeof assessmentCriterion === "object" &&
-          assessmentCriterion !== null &&
-          typeof (assessmentCriterion as { id?: unknown }).id === "string" &&
-          typeof (
-            assessmentCriterion as { learningOutcomeId?: unknown }
-          ).learningOutcomeId === "string" &&
-          typeof (
-            assessmentCriterion as { description?: unknown }
-          ).description === "string",
-      ));
+      candidate.assessmentCriteria.every(isAssessmentCriterion));
 
   const hasValidCoverageWeights =
     candidate.coverageWeights === undefined ||
-    (typeof candidate.coverageWeights === "object" &&
-      candidate.coverageWeights !== null &&
-      ((
-        candidate.coverageWeights as { learningOutcomeWeights?: unknown }
-      ).learningOutcomeWeights === undefined ||
-        (Array.isArray(
-          (candidate.coverageWeights as { learningOutcomeWeights?: unknown })
-            .learningOutcomeWeights,
-        ) &&
-          (
-            (candidate.coverageWeights as { learningOutcomeWeights?: unknown })
-              .learningOutcomeWeights as unknown[]
-          ).every(
-            (weight) =>
-              typeof weight === "object" &&
-              weight !== null &&
-              typeof (weight as { learningOutcomeId?: unknown }).learningOutcomeId ===
-                "string" &&
-              typeof (weight as { percentage?: unknown }).percentage === "number",
-          ))) &&
-      ((
-        candidate.coverageWeights as { assessmentCriterionWeights?: unknown }
-      ).assessmentCriterionWeights === undefined ||
-        (Array.isArray(
-          (
-            candidate.coverageWeights as {
-              assessmentCriterionWeights?: unknown;
-            }
-          ).assessmentCriterionWeights,
-        ) &&
-          (
-            (
-              candidate.coverageWeights as {
-                assessmentCriterionWeights?: unknown;
-              }
-            ).assessmentCriterionWeights as unknown[]
-          ).every(
-            (weight) =>
-              typeof weight === "object" &&
-              weight !== null &&
-              typeof (
-                weight as { assessmentCriterionId?: unknown }
-              ).assessmentCriterionId === "string" &&
-              typeof (
-                weight as { learningOutcomeId?: unknown }
-              ).learningOutcomeId === "string" &&
-              typeof (
-                weight as { percentageWithinLearningOutcome?: unknown }
-              ).percentageWithinLearningOutcome === "number",
-          ))));
+    isCoverageWeights(candidate.coverageWeights);
 
   return (
     typeof candidate.examId === "string" &&
@@ -260,10 +158,8 @@ export function isGenerateExamUseCaseInput(
     typeof candidate.moduleId === "string" &&
     isDifficulty(candidate.difficulty) &&
     (candidate.timeLimitMinutes === undefined ||
-      (typeof candidate.timeLimitMinutes === "number" &&
-        Number.isFinite(candidate.timeLimitMinutes) &&
-        candidate.timeLimitMinutes > 0)) &&
-    typeof candidate.questionCount === "number" &&
+      isPositiveFiniteNumber(candidate.timeLimitMinutes)) &&
+    isFiniteNumber(candidate.questionCount) &&
     Array.isArray(candidate.availableQuestions) &&
     candidate.availableQuestions.every(isQuestion) &&
     (candidate.distribution === undefined ||
