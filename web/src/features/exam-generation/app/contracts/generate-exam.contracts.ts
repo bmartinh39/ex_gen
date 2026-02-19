@@ -23,11 +23,14 @@ export type CoverageWeights = {
   assessmentCriterionWeights?: AssessmentCriterionWeight[];
 };
 
+export type FrameworkId = "es";
+
 export type GenerateExamUseCaseInput = {
   examId: string;
   name: string;
   moduleId: string;
   difficulty: Difficulty;
+  frameworkId?: FrameworkId;
   timeLimitMinutes?: number;
   questionCount: number;
   availableQuestions: Question[];

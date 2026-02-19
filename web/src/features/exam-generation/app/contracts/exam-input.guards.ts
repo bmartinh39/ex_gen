@@ -1,4 +1,7 @@
-import type { GenerateExamUseCaseInput } from "./generate-exam.contracts";
+import type {
+  FrameworkId,
+  GenerateExamUseCaseInput,
+} from "./generate-exam.contracts";
 import type {
   Difficulty,
   Exam,
@@ -25,6 +28,10 @@ export function isDifficulty(value: unknown): value is Difficulty {
 
 export function isQuestionIntent(value: unknown): value is QuestionIntent {
   return value === "theoretical" || value === "practical";
+}
+
+export function isFrameworkId(value: unknown): value is FrameworkId {
+  return value === "es";
 }
 
 export function isOption(value: unknown): value is Option {
@@ -157,6 +164,7 @@ export function isGenerateExamUseCaseInput(
     typeof candidate.name === "string" &&
     typeof candidate.moduleId === "string" &&
     isDifficulty(candidate.difficulty) &&
+    (candidate.frameworkId === undefined || isFrameworkId(candidate.frameworkId)) &&
     (candidate.timeLimitMinutes === undefined ||
       isPositiveFiniteNumber(candidate.timeLimitMinutes)) &&
     isFiniteNumber(candidate.questionCount) &&

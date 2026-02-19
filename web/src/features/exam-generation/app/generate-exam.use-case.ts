@@ -5,6 +5,7 @@ import type {
   GenerateExamUseCaseOutput,
 } from "./contracts/generate-exam.contracts";
 import { buildCeTargetQuestionCounts } from "./services/coverage-planner";
+import { resolveFrameworkRules } from "./services/framework-rules";
 import {
   selectQuestionsByCeTargets,
   selectQuestionsByDistribution,
@@ -14,6 +15,11 @@ export function generateExamUseCase(
   input: GenerateExamUseCaseInput,
 ): GenerateExamUseCaseOutput {
   const errors: string[] = [];
+  const frameworkRules = resolveFrameworkRules(input.frameworkId);
+  const frameworkValidationErrors = frameworkRules.validateGenerateExamInput(input);
+  if (frameworkValidationErrors.length > 0) {
+    return { errors: frameworkValidationErrors };
+  }
 
   if (!Number.isInteger(input.questionCount) || input.questionCount < 1) {
     errors.push("questionCount must be an integer greater than 0.");

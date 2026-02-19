@@ -44,6 +44,28 @@ describe("POST /api/exams/generate", () => {
     expect(body).toEqual({ error: "Invalid request body for exam generation." });
   });
 
+  it("returns 400 for unsupported frameworkId", async () => {
+    const request = new Request("http://localhost/api/exams/generate", {
+      method: "POST",
+      body: JSON.stringify({
+        examId: "exam-1",
+        name: "Generated exam",
+        moduleId: "module-1",
+        difficulty: "easy",
+        frameworkId: "uk",
+        questionCount: 1,
+        availableQuestions: [buildQuestion("q-1", "theoretical")],
+      }),
+      headers: { "content-type": "application/json" },
+    });
+
+    const response = await POST(request);
+    const body = await response.json();
+
+    expect(response.status).toBe(400);
+    expect(body).toEqual({ error: "Invalid request body for exam generation." });
+  });
+
   it("returns 400 when generation fails business constraints", async () => {
     const request = new Request("http://localhost/api/exams/generate", {
       method: "POST",
