@@ -1,6 +1,7 @@
 import { describe, expect, it, beforeAll, afterAll } from "vitest";
 
 import { POST } from "./route";
+import { MAX_JSON_BODY_SIZE } from "@/app/api/_shared/request-limits";
 import type { Question } from "@/features/exam-generation/domain";
 
 const previousApiKey = process.env.EX_GEN_API_KEY;
@@ -73,6 +74,27 @@ describe("POST /api/exams/generate", () => {
         difficulty: "easy",
         frameworkId: "uk",
         questionCount: 1,
+        availableQuestions: [buildQuestion("q-1", "theoretical")],
+      }),
+      headers: authHeaders,
+    });
+
+    const response = await POST(request);
+    const body = await response.json();
+
+    expect(response.status).toBe(400);
+    expect(body).toEqual({ error: "Invalid request body for exam generation." });
+  });
+
+  it("returns 400 when questionCount exceeds configured maximum", async () => {
+    const request = new Request("http://localhost/api/exams/generate", {
+      method: "POST",
+      body: JSON.stringify({
+        examId: "exam-1",
+        name: "Generated exam",
+        moduleId: "module-1",
+        difficulty: "easy",
+        questionCount: 201,
         availableQuestions: [buildQuestion("q-1", "theoretical")],
       }),
       headers: authHeaders,
@@ -169,4 +191,20 @@ describe("POST /api/exams/generate", () => {
     expect(body).toEqual({ error: "Unauthorized: Invalid or missing API key." });
   });
 
+  it("returns 413 when payload exceeds configured size", async () => {
+    const request = new Request("http://localhost/api/exams/generate", {
+      method: "POST",
+      body: JSON.stringify({}),
+      headers: {
+        ...authHeaders,
+        "content-length": String(MAX_JSON_BODY_SIZE + 1),
+      },
+    });
+
+    const response = await POST(request);
+    const body = await response.json();
+
+    expect(response.status).toBe(413);
+    expect(body).toEqual({ error: "Payload too large." });
+  });
 });

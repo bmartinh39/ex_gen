@@ -18,6 +18,11 @@ import {
   isPositiveFiniteNumber,
 } from "./guard-helpers";
 
+const MAX_QUESTION_COUNT = 200;
+const MAX_AVAILABLE_QUESTIONS = 2000;
+const MAX_LEARNING_OUTCOMES = 500;
+const MAX_ASSESSMENT_CRITERIA = 2000;
+
 export type ValidateExamRequestBody = {
   exam: Exam;
 };
@@ -145,14 +150,27 @@ export function isGenerateExamUseCaseInput(
 
   const candidate = value;
 
+  const hasValidQuestionCount =
+    isFiniteNumber(candidate.questionCount) &&
+    Number.isInteger(candidate.questionCount) &&
+    candidate.questionCount >= 1 &&
+    candidate.questionCount <= MAX_QUESTION_COUNT;
+
+  const hasValidAvailableQuestions =
+    Array.isArray(candidate.availableQuestions) &&
+    candidate.availableQuestions.length <= MAX_AVAILABLE_QUESTIONS &&
+    candidate.availableQuestions.every(isQuestion);
+
   const hasValidLearningOutcomes =
     candidate.learningOutcomes === undefined ||
     (Array.isArray(candidate.learningOutcomes) &&
+      candidate.learningOutcomes.length <= MAX_LEARNING_OUTCOMES &&
       candidate.learningOutcomes.every(isLearningOutcome));
 
   const hasValidAssessmentCriteria =
     candidate.assessmentCriteria === undefined ||
     (Array.isArray(candidate.assessmentCriteria) &&
+      candidate.assessmentCriteria.length <= MAX_ASSESSMENT_CRITERIA &&
       candidate.assessmentCriteria.every(isAssessmentCriterion));
 
   const hasValidCoverageWeights =
@@ -167,9 +185,8 @@ export function isGenerateExamUseCaseInput(
     (candidate.frameworkId === undefined || isFrameworkId(candidate.frameworkId)) &&
     (candidate.timeLimitMinutes === undefined ||
       isPositiveFiniteNumber(candidate.timeLimitMinutes)) &&
-    isFiniteNumber(candidate.questionCount) &&
-    Array.isArray(candidate.availableQuestions) &&
-    candidate.availableQuestions.every(isQuestion) &&
+    hasValidQuestionCount &&
+    hasValidAvailableQuestions &&
     (candidate.distribution === undefined ||
       isQuestionDistribution(candidate.distribution)) &&
     hasValidLearningOutcomes &&

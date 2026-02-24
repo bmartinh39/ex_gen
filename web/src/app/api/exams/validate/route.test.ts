@@ -1,6 +1,7 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 import { POST } from "./route";
+import { MAX_JSON_BODY_SIZE } from "@/app/api/_shared/request-limits";
 import type { Exam } from "@/features/exam-generation/domain";
 
 const previousApiKey = process.env.EX_GEN_API_KEY;
@@ -172,5 +173,22 @@ describe("POST /api/exams/validate", () => {
 
     expect(response.status).toBe(401);
     expect(body).toEqual({ error: "Unauthorized: Invalid or missing API key." });
+  });
+
+  it("returns 413 when payload exceeds configured size", async () => {
+    const request = new Request("http://localhost/api/exams/validate", {
+      method: "POST",
+      body: JSON.stringify({}),
+      headers: {
+        ...authHeaders,
+        "content-length": String(MAX_JSON_BODY_SIZE + 1),
+      },
+    });
+
+    const response = await POST(request);
+    const body = await response.json();
+
+    expect(response.status).toBe(413);
+    expect(body).toEqual({ error: "Payload too large." });
   });
 });

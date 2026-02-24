@@ -6,12 +6,17 @@ import {
 } from "@/features/exam-generation/app/generate-exam.use-case";
 
 import { requireApiKey } from "@/app/api/_shared/require-api-key";
-
+import { requireContentLengthWithinLimit } from "@/app/api/_shared/request-limits";
 
 export async function POST(request: Request) {
   const apiKeyErrorResponse = requireApiKey(request);
   if (apiKeyErrorResponse) {
     return apiKeyErrorResponse;
+  }
+
+  const sizeError = requireContentLengthWithinLimit(request);
+  if (sizeError) {
+    return sizeError;
   }
 
   let body: unknown;
