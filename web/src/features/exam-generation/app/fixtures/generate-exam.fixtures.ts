@@ -139,8 +139,8 @@ export const fixtureGenerateExamHealthcare: GenerateExamUseCaseInput = {
   availableQuestions: buildQuestionBank(assessmentCriteriaB, 40, "hea"),
   distribution: {
     byCount: {
-      theoreticalPct: 40,
-      practicalPct: 60,
+      theoreticalPct: 50,
+      practicalPct: 50,
       tolerancePct: 5,
     },
   },
