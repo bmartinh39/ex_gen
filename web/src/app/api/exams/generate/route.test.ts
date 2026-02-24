@@ -1,7 +1,26 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, beforeAll, afterAll } from "vitest";
 
 import { POST } from "./route";
 import type { Question } from "@/features/exam-generation/domain";
+
+const previousApiKey = process.env.EX_GEN_API_KEY;
+const authHeaders = {
+  "content-type": "application/json",
+  "x-api-key": "test-api-key",
+};
+
+
+beforeAll(() => {
+  process.env.EX_GEN_API_KEY = "test-api-key";
+});
+
+afterAll(() => {
+  if (previousApiKey == undefined){
+    delete process.env.EX_GEN_API_KEY;
+  } else {
+    process.env.EX_GEN_API_KEY = previousApiKey;
+  }
+});
 
 function buildQuestion(id: string, intent: "theoretical" | "practical"): Question {
   return {
@@ -20,7 +39,7 @@ describe("POST /api/exams/generate", () => {
     const request = new Request("http://localhost/api/exams/generate", {
       method: "POST",
       body: "{invalid-json",
-      headers: { "content-type": "application/json" },
+      headers: authHeaders,
     });
 
     const response = await POST(request);
@@ -34,7 +53,7 @@ describe("POST /api/exams/generate", () => {
     const request = new Request("http://localhost/api/exams/generate", {
       method: "POST",
       body: JSON.stringify({ name: "Missing fields" }),
-      headers: { "content-type": "application/json" },
+      headers: authHeaders,
     });
 
     const response = await POST(request);
@@ -56,7 +75,7 @@ describe("POST /api/exams/generate", () => {
         questionCount: 1,
         availableQuestions: [buildQuestion("q-1", "theoretical")],
       }),
-      headers: { "content-type": "application/json" },
+      headers: authHeaders,
     });
 
     const response = await POST(request);
@@ -83,7 +102,7 @@ describe("POST /api/exams/generate", () => {
           },
         },
       }),
-      headers: { "content-type": "application/json" },
+      headers: authHeaders,
     });
 
     const response = await POST(request);
@@ -118,7 +137,7 @@ describe("POST /api/exams/generate", () => {
           },
         },
       }),
-      headers: { "content-type": "application/json" },
+      headers: authHeaders,
     });
 
     const response = await POST(request);
@@ -128,4 +147,26 @@ describe("POST /api/exams/generate", () => {
     expect(body.exam).toBeDefined();
     expect(body.exam.questions).toHaveLength(4);
   });
+
+  it("returns 401 for missing API key", async () => {
+    const request = new Request("http://localhost/api/exams/generate", {
+      method: "POST", 
+      body: JSON.stringify({
+        examId: "exam-1",
+        name: "Generated exam", 
+        moduleId: "module-1",   
+        difficulty: "easy",
+        questionCount: 1,
+        availableQuestions: [buildQuestion("q-1", "theoretical")],
+      }),
+      headers: { "content-type": "application/json" },
+    }); 
+
+    const response = await POST(request);
+    const body = await response.json();     
+    
+    expect(response.status).toBe(401);
+    expect(body).toEqual({ error: "Unauthorized: Invalid or missing API key." });
+  });
+
 });

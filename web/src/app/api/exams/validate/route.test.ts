@@ -1,7 +1,25 @@
-import { describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 import { POST } from "./route";
 import type { Exam } from "@/features/exam-generation/domain";
+
+const previousApiKey = process.env.EX_GEN_API_KEY;
+const authHeaders = {
+  "content-type": "application/json",
+  "x-api-key": "test-api-key",
+};
+
+beforeAll(() => {
+  process.env.EX_GEN_API_KEY = "test-api-key";
+});
+
+afterAll(() => {
+  if (previousApiKey === undefined) {
+    delete process.env.EX_GEN_API_KEY;
+  } else {
+    process.env.EX_GEN_API_KEY = previousApiKey;
+  }
+});
 
 function buildValidExam(): Exam {
   return {
@@ -31,7 +49,7 @@ describe("POST /api/exams/validate", () => {
     const request = new Request("http://localhost/api/exams/validate", {
       method: "POST",
       body: "{invalid-json",
-      headers: { "content-type": "application/json" },
+      headers: authHeaders,
     });
 
     const response = await POST(request);
@@ -45,7 +63,7 @@ describe("POST /api/exams/validate", () => {
     const request = new Request("http://localhost/api/exams/validate", {
       method: "POST",
       body: JSON.stringify({}),
-      headers: { "content-type": "application/json" },
+      headers: authHeaders,
     });
 
     const response = await POST(request);
@@ -76,7 +94,7 @@ describe("POST /api/exams/validate", () => {
           ],
         },
       }),
-      headers: { "content-type": "application/json" },
+      headers: authHeaders,
     });
 
     const response = await POST(request);
@@ -101,7 +119,7 @@ describe("POST /api/exams/validate", () => {
           },
         },
       }),
-      headers: { "content-type": "application/json" },
+      headers: authHeaders,
     });
 
     const response = await POST(request);
@@ -118,7 +136,7 @@ describe("POST /api/exams/validate", () => {
     const request = new Request("http://localhost/api/exams/validate", {
       method: "POST",
       body: JSON.stringify({ exam: invalidExam }),
-      headers: { "content-type": "application/json" },
+      headers: authHeaders,
     });
 
     const response = await POST(request);
@@ -132,7 +150,7 @@ describe("POST /api/exams/validate", () => {
     const request = new Request("http://localhost/api/exams/validate", {
       method: "POST",
       body: JSON.stringify({ exam: buildValidExam() }),
-      headers: { "content-type": "application/json" },
+      headers: authHeaders,
     });
 
     const response = await POST(request);
@@ -140,5 +158,19 @@ describe("POST /api/exams/validate", () => {
 
     expect(response.status).toBe(200);
     expect(body).toEqual({ errors: [] });
+  });
+
+  it("returns 401 for missing API key", async () => {
+    const request = new Request("http://localhost/api/exams/validate", {
+      method: "POST",
+      body: JSON.stringify({ exam: buildValidExam() }),
+      headers: { "content-type": "application/json" },
+    });
+
+    const response = await POST(request);
+    const body = await response.json();
+
+    expect(response.status).toBe(401);
+    expect(body).toEqual({ error: "Unauthorized: Invalid or missing API key." });
   });
 });

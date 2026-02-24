@@ -5,7 +5,15 @@ import {
   generateExamUseCase,
 } from "@/features/exam-generation/app/generate-exam.use-case";
 
+import { requireApiKey } from "@/app/api/_shared/require-api-key";
+
+
 export async function POST(request: Request) {
+  const apiKeyErrorResponse = requireApiKey(request);
+  if (apiKeyErrorResponse) {
+    return apiKeyErrorResponse;
+  }
+
   let body: unknown;
 
   try {
