@@ -168,4 +168,143 @@ describe("generateExamUseCase", () => {
     expect(ceCounts["ce-1"]).toBe(3);
     expect(ceCounts["ce-2"]).toBe(1);
   });
+
+  it("enforces theoretical/practical distribution before coverage selection", () => {
+    const learningOutcomes: LearningOutcome[] = [
+      { id: "ra-1", moduleId: "module-1", description: "RA 1" },
+    ];
+
+    const assessmentCriteria: AssessmentCriterion[] = [
+      { id: "ce-1", learningOutcomeId: "ra-1", description: "CE 1" },
+    ];
+
+    const availableQuestions: Question[] = [
+      { ...buildQuestion("q-1", "theoretical"), ceIds: ["ce-1"] },
+      { ...buildQuestion("q-2", "theoretical"), ceIds: ["ce-1"] },
+      { ...buildQuestion("q-3", "theoretical"), ceIds: ["ce-1"] },
+      { ...buildQuestion("q-4", "practical"), ceIds: ["ce-1"] },
+      { ...buildQuestion("q-5", "practical"), ceIds: ["ce-1"] },
+      { ...buildQuestion("q-6", "practical"), ceIds: ["ce-1"] },
+    ];
+
+    const output = generateExamUseCase({
+      examId: "exam-1",
+      name: "Generated exam",
+      moduleId: "module-1",
+      difficulty: "easy",
+      questionCount: 4,
+      availableQuestions,
+      distribution: {
+        byCount: {
+          theoreticalPct: 50,
+          practicalPct: 50,
+          tolerancePct: 0,
+        },
+      },
+      learningOutcomes,
+      assessmentCriteria,
+    });
+
+    expect(output.errors).toEqual([]);
+    expect(output.exam).toBeDefined();
+
+    const theoreticalCount =
+      output.exam?.questions.filter((question) => question.intent === "theoretical")
+        .length ?? 0;
+    const practicalCount =
+      output.exam?.questions.filter((question) => question.intent === "practical")
+        .length ?? 0;
+
+    expect(theoreticalCount).toBe(2);
+    expect(practicalCount).toBe(2);
+  });
+
+  it("returns warnings instead of errors when CE coverage targets are not fully met", () => {
+    const learningOutcomes: LearningOutcome[] = [
+      { id: "ra-1", moduleId: "module-1", description: "RA 1" },
+      { id: "ra-2", moduleId: "module-1", description: "RA 2" },
+    ];
+
+    const assessmentCriteria: AssessmentCriterion[] = [
+      { id: "ce-1", learningOutcomeId: "ra-1", description: "CE 1" },
+      { id: "ce-2", learningOutcomeId: "ra-2", description: "CE 2" },
+    ];
+
+    const availableQuestions: Question[] = [
+      { ...buildQuestion("q-1", "theoretical"), ceIds: ["ce-2"] },
+      { ...buildQuestion("q-2", "theoretical"), ceIds: ["ce-2"] },
+      { ...buildQuestion("q-3", "practical"), ceIds: ["ce-2"] },
+      { ...buildQuestion("q-4", "practical"), ceIds: ["ce-2"] },
+    ];
+
+    const output = generateExamUseCase({
+      examId: "exam-1",
+      name: "Generated exam",
+      moduleId: "module-1",
+      difficulty: "easy",
+      questionCount: 4,
+      availableQuestions,
+      distribution: {
+        byCount: {
+          theoreticalPct: 50,
+          practicalPct: 50,
+          tolerancePct: 0,
+        },
+      },
+      learningOutcomes,
+      assessmentCriteria,
+      coverageWeights: {
+        learningOutcomeWeights: [
+          { learningOutcomeId: "ra-1", percentage: 75 },
+          { learningOutcomeId: "ra-2", percentage: 25 },
+        ],
+      },
+    });
+
+    expect(output.errors).toEqual([]);
+    expect(output.exam).toBeDefined();
+    expect(output.warnings).toHaveLength(1);
+    expect(output.warnings?.[0]).toContain(
+      "Coverage targets could not be fully satisfied:",
+    );
+  });
+
+  it("prefers higher CE affinity when binary CE overlap is equivalent", () => {
+    const learningOutcomes: LearningOutcome[] = [
+      { id: "ra-1", moduleId: "module-1", description: "RA 1" },
+    ];
+
+    const assessmentCriteria: AssessmentCriterion[] = [
+      { id: "ce-1", learningOutcomeId: "ra-1", description: "CE 1" },
+    ];
+
+    const availableQuestions: Question[] = [
+      {
+        ...buildQuestion("q-low-affinity", "theoretical"),
+        ceIds: ["ce-1"],
+        ceCoverage: [{ ceId: "ce-1", score: 0.2 }],
+      },
+      {
+        ...buildQuestion("q-high-affinity", "theoretical"),
+        ceIds: ["ce-1"],
+        ceCoverage: [{ ceId: "ce-1", score: 0.9 }],
+      },
+    ];
+
+    const output = generateExamUseCase({
+      examId: "exam-1",
+      name: "Generated exam",
+      moduleId: "module-1",
+      difficulty: "easy",
+      questionCount: 1,
+      availableQuestions,
+      learningOutcomes,
+      assessmentCriteria,
+    });
+
+    expect(output.errors).toEqual([]);
+    expect(output.exam).toBeDefined();
+    expect(output.exam?.questions).toHaveLength(1);
+    expect(output.exam?.questions[0].id).toBe("q-high-affinity");
+  });
 });

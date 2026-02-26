@@ -43,4 +43,5 @@ export type GenerateExamUseCaseInput = {
 export type GenerateExamUseCaseOutput = {
   exam?: Exam;
   errors: string[];
+  warnings?: string[];
 };

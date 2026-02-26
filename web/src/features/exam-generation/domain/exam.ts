@@ -1,10 +1,16 @@
 import type { Difficulty, QuestionIntent } from "./shared";
 
+export type AssessmentCriterionCoverage = {
+  ceId: string;
+  score: number;
+};
+
 export type BaseQuestion = {
   id: string;
   text: string;
   difficulty: Difficulty;
   ceIds: string[];
+  ceCoverage?: AssessmentCriterionCoverage[];
   intent: QuestionIntent;
   points?: number;
 };

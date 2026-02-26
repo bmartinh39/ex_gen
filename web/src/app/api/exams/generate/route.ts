@@ -39,5 +39,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ errors: output.errors }, { status: 400 });
   }
 
-  return NextResponse.json({ exam: output.exam }, { status: 200 });
+  return NextResponse.json(
+    { exam: output.exam, warnings: output.warnings ?? [] },
+    { status: 200 },
+  );
 }
