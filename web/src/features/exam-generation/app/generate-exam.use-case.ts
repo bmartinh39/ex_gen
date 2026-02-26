@@ -15,6 +15,7 @@ export function generateExamUseCase(
   input: GenerateExamUseCaseInput,
 ): GenerateExamUseCaseOutput {
   const errors: string[] = [];
+  const warnings: string[] = [];
   const frameworkRules = resolveFrameworkRules(input.frameworkId);
   const frameworkValidationErrors = frameworkRules.validateGenerateExamInput(input);
   if (frameworkValidationErrors.length > 0) {
@@ -31,7 +32,25 @@ export function generateExamUseCase(
     return { errors };
   }
 
-  let selectionResult: { questions: Question[]; errors: string[] };
+  let selectionResult: { questions: Question[]; errors: string[]; warnings: string[] };
+  const byCount = input.distribution?.byCount;
+  let candidatePool = input.availableQuestions;
+
+  if (byCount) {
+    const distributionResult = selectQuestionsByDistribution(
+      input.questionCount,
+      input.availableQuestions,
+      byCount,
+    );
+
+    if (distributionResult.errors.length > 0) {
+      return { errors: distributionResult.errors };
+    }
+
+    warnings.push(...distributionResult.warnings);
+    candidatePool = distributionResult.questions;
+  }
+
   const hasCoverageContext =
     (input.learningOutcomes?.length ?? 0) > 0 &&
     (input.assessmentCriteria?.length ?? 0) > 0;
@@ -50,26 +69,23 @@ export function generateExamUseCase(
 
     selectionResult = selectQuestionsByCeTargets(
       input.questionCount,
-      input.availableQuestions,
+      candidatePool,
       targetResult.ceTargetCounts,
     );
   } else {
-    const byCount = input.distribution?.byCount;
     selectionResult = byCount
-      ? selectQuestionsByDistribution(
-          input.questionCount,
-          input.availableQuestions,
-          byCount,
-        )
+      ? { questions: candidatePool, errors: [], warnings: [] }
       : {
           questions: input.availableQuestions.slice(0, input.questionCount),
           errors: [],
+          warnings: [],
         };
   }
 
   if (selectionResult.errors.length > 0) {
     return { errors: selectionResult.errors };
   }
+  warnings.push(...selectionResult.warnings);
 
   const exam: Exam = {
     id: input.examId,
@@ -89,5 +105,6 @@ export function generateExamUseCase(
   return {
     exam,
     errors: [],
+    warnings,
   };
 }

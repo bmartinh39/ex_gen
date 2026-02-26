@@ -48,6 +48,16 @@ export function isOption(value: unknown): value is Option {
   );
 }
 
+function isAssessmentCriterionCoverage(value: unknown): boolean {
+  return (
+    isObjectRecord(value) &&
+    typeof value.ceId === "string" &&
+    isFiniteNumber(value.score) &&
+    value.score >= 0 &&
+    value.score <= 1
+  );
+}
+
 export function isQuestion(value: unknown): value is Question {
   if (!isObjectRecord(value)) {
     return false;
@@ -60,6 +70,9 @@ export function isQuestion(value: unknown): value is Question {
     typeof candidate.text === "string" &&
     isDifficulty(candidate.difficulty) &&
     Array.isArray(candidate.ceIds) &&
+    (candidate.ceCoverage === undefined ||
+      (Array.isArray(candidate.ceCoverage) &&
+        candidate.ceCoverage.every(isAssessmentCriterionCoverage))) &&
     isQuestionIntent(candidate.intent) &&
     (candidate.points === undefined || isFiniteNumber(candidate.points)) &&
     candidate.ceIds.every((ceId) => typeof ceId === "string");
