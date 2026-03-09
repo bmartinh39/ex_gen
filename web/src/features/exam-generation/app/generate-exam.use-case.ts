@@ -36,12 +36,28 @@ export function generateExamUseCase(
   let selectionResult: { questions: Question[]; errors: string[]; warnings: string[] };
   const byCount = input.distribution?.byCount;
   let candidatePool = input.availableQuestions;
+  const hasCoverageContext =
+    (input.learningOutcomes?.length ?? 0) > 0 &&
+    (input.assessmentCriteria?.length ?? 0) > 0;
+  const targetResult = hasCoverageContext
+    ? buildCeTargetQuestionCounts(
+        input.questionCount,
+        input.learningOutcomes ?? [],
+        input.assessmentCriteria ?? [],
+        input.coverageWeights,
+      )
+    : null;
+
+  if (targetResult?.errors.length) {
+    return { errors: targetResult.errors };
+  }
 
   if (byCount) {
     const distributionResult = selectQuestionsByDistribution(
       input.questionCount,
       input.availableQuestions,
       byCount,
+      targetResult?.ceTargetCounts,
     );
 
     if (distributionResult.errors.length > 0) {
@@ -52,26 +68,11 @@ export function generateExamUseCase(
     candidatePool = distributionResult.questions;
   }
 
-  const hasCoverageContext =
-    (input.learningOutcomes?.length ?? 0) > 0 &&
-    (input.assessmentCriteria?.length ?? 0) > 0;
-
   if (hasCoverageContext) {
-    const targetResult = buildCeTargetQuestionCounts(
-      input.questionCount,
-      input.learningOutcomes ?? [],
-      input.assessmentCriteria ?? [],
-      input.coverageWeights,
-    );
-
-    if (targetResult.errors.length > 0) {
-      return { errors: targetResult.errors };
-    }
-
     selectionResult = selectQuestionsByCeTargets(
       input.questionCount,
       candidatePool,
-      targetResult.ceTargetCounts,
+      targetResult?.ceTargetCounts ?? {},
     );
   } else {
     selectionResult = byCount

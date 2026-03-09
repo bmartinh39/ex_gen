@@ -267,6 +267,65 @@ describe("generateExamUseCase", () => {
     expect(practicalCount).toBe(2);
   });
 
+  it("ranks each intent pool by CE target usefulness when coverage context is present", () => {
+    const learningOutcomes: LearningOutcome[] = [
+      { id: "ra-1", moduleId: "module-1", description: "RA 1" },
+    ];
+
+    const assessmentCriteria: AssessmentCriterion[] = [
+      { id: "ce-1", learningOutcomeId: "ra-1", description: "CE 1" },
+    ];
+
+    const availableQuestions: Question[] = [
+      {
+        ...buildQuestion("t-baseline-rich", "theoretical"),
+        ceIds: ["ce-2", "ce-3"],
+        points: 10,
+      },
+      {
+        ...buildQuestion("t-target-fit", "theoretical"),
+        ceIds: ["ce-1"],
+        ceCoverage: [{ ceId: "ce-1", score: 0.9 }],
+        points: 1,
+      },
+      {
+        ...buildQuestion("p-target-fit", "practical"),
+        ceIds: ["ce-1"],
+        ceCoverage: [{ ceId: "ce-1", score: 0.8 }],
+      },
+      {
+        ...buildQuestion("p-baseline-rich", "practical"),
+        ceIds: ["ce-2", "ce-3"],
+        points: 10,
+      },
+    ];
+
+    const output = generateExamUseCase({
+      examId: "exam-1",
+      name: "Generated exam",
+      moduleId: "module-1",
+      difficulty: "easy",
+      questionCount: 2,
+      availableQuestions,
+      distribution: {
+        byCount: {
+          theoreticalPct: 50,
+          practicalPct: 50,
+          tolerancePct: 0,
+        },
+      },
+      learningOutcomes,
+      assessmentCriteria,
+    });
+
+    expect(output.errors).toEqual([]);
+    expect(output.exam).toBeDefined();
+    expect(output.exam?.questions.map((question) => question.id)).toEqual([
+      "t-target-fit",
+      "p-target-fit",
+    ]);
+  });
+
   it("returns warnings instead of errors when CE coverage targets are not fully met", () => {
     const learningOutcomes: LearningOutcome[] = [
       { id: "ra-1", moduleId: "module-1", description: "RA 1" },

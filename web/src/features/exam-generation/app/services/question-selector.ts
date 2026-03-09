@@ -36,6 +36,43 @@ function getCoverageByCeId(question: Question): Record<string, number> {
   return coverage;
 }
 
+function scoreQuestionAgainstCeTargets(
+  question: Question,
+  ceTargetCounts: Record<string, number>,
+): number {
+  const coverage = getCoverageByCeId(question);
+  let score = 0;
+
+  for (const [ceId, targetCount] of Object.entries(ceTargetCounts)) {
+    if (targetCount <= 0) {
+      continue;
+    }
+
+    const affinity = coverage[ceId] ?? 0;
+    if (affinity > 0) {
+      score += targetCount * affinity;
+    }
+  }
+
+  return score;
+}
+
+function compareQuestionsForCoverageRanking(
+  left: Question,
+  right: Question,
+  ceTargetCounts: Record<string, number>,
+): number {
+  const coverageScoreDelta =
+    scoreQuestionAgainstCeTargets(right, ceTargetCounts) -
+    scoreQuestionAgainstCeTargets(left, ceTargetCounts);
+
+  if (coverageScoreDelta !== 0) {
+    return coverageScoreDelta;
+  }
+
+  return compareQuestionsForBaselineRanking(left, right);
+}
+
 export function selectQuestionsByCeTargets(
   questionCount: number,
   availableQuestions: Question[],
@@ -133,14 +170,19 @@ export function selectQuestionsByDistribution(
   questionCount: number,
   availableQuestions: Question[],
   distribution: NonNullable<QuestionDistribution["byCount"]>,
+  ceTargetCounts?: Record<string, number>,
 ): { questions: Question[]; errors: string[]; warnings: string[] } {
   const errors: string[] = [];
+  const compareQuestions = ceTargetCounts
+    ? (left: Question, right: Question) =>
+        compareQuestionsForCoverageRanking(left, right, ceTargetCounts)
+    : compareQuestionsForBaselineRanking;
   const theoreticalPool = availableQuestions
     .filter((question) => question.intent === "theoretical")
-    .sort(compareQuestionsForBaselineRanking);
+    .sort(compareQuestions);
   const practicalPool = availableQuestions
     .filter((question) => question.intent === "practical")
-    .sort(compareQuestionsForBaselineRanking);
+    .sort(compareQuestions);
 
   const targetTheoretical = Math.round(
     (questionCount * distribution.theoreticalPct) / 100,
