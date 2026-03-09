@@ -1,17 +1,31 @@
 import type { Question, QuestionDistribution } from "../../domain";
 
-function getCoverageByCeId(question: Question): Record<string, number> {
-  if (!question.ceCoverage || question.ceCoverage.length === 0) {
-    return question.ceIds.reduce<Record<string, number>>((acc, ceId) => {
-      acc[ceId] = 1;
-      return acc;
-    }, {});
+const DEFAULT_ELIGIBLE_CE_COVERAGE_SCORE = 0.4;
+
+function compareQuestionsForBaselineRanking(left: Question, right: Question): number {
+  const ceRichnessDelta = right.ceIds.length - left.ceIds.length;
+  if (ceRichnessDelta !== 0) {
+    return ceRichnessDelta;
   }
 
+  const pointsDelta = (right.points ?? 0) - (left.points ?? 0);
+  if (pointsDelta !== 0) {
+    return pointsDelta;
+  }
+
+  return left.id.localeCompare(right.id);
+}
+
+function getCoverageByCeId(question: Question): Record<string, number> {
+  const eligibleCeIds = new Set(question.ceIds);
   const coverage: Record<string, number> = {};
 
-  for (const entry of question.ceCoverage) {
-    if (entry.score <= 0) {
+  for (const ceId of eligibleCeIds) {
+    coverage[ceId] = DEFAULT_ELIGIBLE_CE_COVERAGE_SCORE;
+  }
+
+  for (const entry of question.ceCoverage ?? []) {
+    if (!eligibleCeIds.has(entry.ceId) || entry.score <= 0) {
       continue;
     }
 
@@ -121,12 +135,12 @@ export function selectQuestionsByDistribution(
   distribution: NonNullable<QuestionDistribution["byCount"]>,
 ): { questions: Question[]; errors: string[]; warnings: string[] } {
   const errors: string[] = [];
-  const theoreticalPool = availableQuestions.filter(
-    (question) => question.intent === "theoretical",
-  );
-  const practicalPool = availableQuestions.filter(
-    (question) => question.intent === "practical",
-  );
+  const theoreticalPool = availableQuestions
+    .filter((question) => question.intent === "theoretical")
+    .sort(compareQuestionsForBaselineRanking);
+  const practicalPool = availableQuestions
+    .filter((question) => question.intent === "practical")
+    .sort(compareQuestionsForBaselineRanking);
 
   const targetTheoretical = Math.round(
     (questionCount * distribution.theoreticalPct) / 100,
@@ -154,6 +168,27 @@ export function selectQuestionsByDistribution(
       ...theoreticalPool.slice(0, targetTheoretical),
       ...practicalPool.slice(0, targetPractical),
     ],
+    errors: [],
+    warnings: [],
+  };
+}
+
+export function selectQuestionsByBaselineRanking(
+  questionCount: number,
+  availableQuestions: Question[],
+): { questions: Question[]; errors: string[]; warnings: string[] } {
+  if (availableQuestions.length < questionCount) {
+    return {
+      questions: [],
+      errors: ["Not enough available questions to satisfy questionCount."],
+      warnings: [],
+    };
+  }
+
+  return {
+    questions: [...availableQuestions]
+      .sort(compareQuestionsForBaselineRanking)
+      .slice(0, questionCount),
     errors: [],
     warnings: [],
   };

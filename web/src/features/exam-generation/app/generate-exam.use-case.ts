@@ -7,6 +7,7 @@ import type {
 import { buildCeTargetQuestionCounts } from "./services/coverage-planner";
 import { resolveFrameworkRules } from "./services/framework-rules";
 import {
+  selectQuestionsByBaselineRanking,
   selectQuestionsByCeTargets,
   selectQuestionsByDistribution,
 } from "./services/question-selector";
@@ -75,11 +76,10 @@ export function generateExamUseCase(
   } else {
     selectionResult = byCount
       ? { questions: candidatePool, errors: [], warnings: [] }
-      : {
-          questions: input.availableQuestions.slice(0, input.questionCount),
-          errors: [],
-          warnings: [],
-        };
+      : selectQuestionsByBaselineRanking(
+          input.questionCount,
+          input.availableQuestions,
+        );
   }
 
   if (selectionResult.errors.length > 0) {
