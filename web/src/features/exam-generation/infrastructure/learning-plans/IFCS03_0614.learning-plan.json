@@ -1,0 +1,180 @@
+{
+  "module": {
+    "id": "module-daw-0614",
+    "officialCode": "IFCS03_0614",
+    "name": "Despliegue de Aplicaciones Web",
+    "code": "0614",
+    "weeklyHours": 3,
+    "totalHours": 90,
+    "description": "Modulo profesional de Despliegue de Aplicaciones Web del ciclo Desarrollo de Aplicaciones Web.",
+    "programId": "program-daw",
+    "programName": "Desarrollo de Aplicaciones Web",
+    "family": "Informatica y Comunicaciones",
+    "educationLevel": "Formacion Profesional de Grado Superior",
+    "europeanReference": "CINE-5b"
+  },
+  "sourceDocument": {
+    "title": "Programacion Didactica - Despliegue de Aplicaciones Web",
+    "format": "docx",
+    "versionLabel": "2025-2026",
+    "academicYear": "2025/2026"
+  },
+  "learningOutcomes": [
+    {
+      "id": "dawd-lo-1",
+      "moduleId": "module-daw-0614",
+      "code": "RA1",
+      "description": "Implanta arquitecturas Web analizando y aplicando criterios de funcionalidad.",
+      "weight": 16.66,
+      "assessmentCriteria": [
+        { "id": "dawd-ce-1-1", "code": "RA1.a", "description": "Se han analizado aspectos generales de arquitecturas Web, sus caracteristicas, ventajas e inconvenientes." },
+        { "id": "dawd-ce-1-2", "code": "RA1.b", "description": "Se han descrito los fundamentos y protocolos en los que se basa el funcionamiento de un servidor Web." },
+        { "id": "dawd-ce-1-3", "code": "RA1.c", "description": "Se ha realizado la instalacion y configuracion basica de servidores Web." },
+        { "id": "dawd-ce-1-4", "code": "RA1.d", "description": "Se han clasificado y descrito los principales servidores de aplicaciones." },
+        { "id": "dawd-ce-1-5", "code": "RA1.e", "description": "Se ha realizado la instalacion y configuracion basica de servidores de aplicaciones." },
+        { "id": "dawd-ce-1-6", "code": "RA1.f", "description": "Se han realizado pruebas de funcionamiento de los servidores web y de aplicaciones." },
+        { "id": "dawd-ce-1-7", "code": "RA1.g", "description": "Se ha analizado la estructura y recursos que componen una aplicacion Web." },
+        { "id": "dawd-ce-1-8", "code": "RA1.h", "description": "Se han descrito los requerimientos del proceso de implantacion de una aplicacion Web." },
+        { "id": "dawd-ce-1-9", "code": "RA1.i", "description": "Se han documentado los procesos de instalacion y configuracion realizados sobre los servidores Web y sobre las aplicaciones." }
+      ]
+    },
+    {
+      "id": "dawd-lo-2",
+      "moduleId": "module-daw-0614",
+      "code": "RA2",
+      "description": "Gestiona servidores Web, evaluando y aplicando criterios de configuracion para el acceso seguro a los servicios.",
+      "weight": 16.66,
+      "assessmentCriteria": [
+        { "id": "dawd-ce-2-1", "code": "RA2.a", "description": "Se han reconocido los parametros de administracion mas importantes del servidor Web." },
+        { "id": "dawd-ce-2-2", "code": "RA2.b", "description": "Se ha ampliado la funcionalidad del servidor mediante la activacion y configuracion de modulos." },
+        { "id": "dawd-ce-2-3", "code": "RA2.c", "description": "Se han creado y configurado sitios virtuales." },
+        { "id": "dawd-ce-2-4", "code": "RA2.d", "description": "Se han configurado los mecanismos de autenticacion y control de acceso del servidor." },
+        { "id": "dawd-ce-2-5", "code": "RA2.e", "description": "Se han obtenido e instalado certificados digitales." },
+        { "id": "dawd-ce-2-6", "code": "RA2.f", "description": "Se han establecido mecanismos para asegurar las comunicaciones entre el cliente y el servidor." },
+        { "id": "dawd-ce-2-7", "code": "RA2.g", "description": "Se han realizado pruebas de funcionamiento y rendimiento del servidor Web." },
+        { "id": "dawd-ce-2-8", "code": "RA2.h", "description": "Se ha elaborado documentacion relativa a la configuracion, administracion segura y recomendaciones de uso del servidor." },
+        { "id": "dawd-ce-2-9", "code": "RA2.i", "description": "Se han realizado los ajustes necesarios para la implantacion de aplicaciones en el servidor Web." }
+      ]
+    },
+    {
+      "id": "dawd-lo-3",
+      "moduleId": "module-daw-0614",
+      "code": "RA3",
+      "description": "Implanta aplicaciones Web en servidores de aplicaciones, evaluando y aplicando criterios de configuracion para su funcionamiento seguro.",
+      "weight": 16.66,
+      "assessmentCriteria": [
+        { "id": "dawd-ce-3-1", "code": "RA3.a", "description": "Se han descrito los componentes y el funcionamiento de los servicios proporcionados por el servidor de aplicaciones." },
+        { "id": "dawd-ce-3-2", "code": "RA3.b", "description": "Se han identificado los principales archivos de configuracion y de bibliotecas compartidas." },
+        { "id": "dawd-ce-3-3", "code": "RA3.c", "description": "Se ha configurado el servidor de aplicaciones para cooperar con el servidor Web." },
+        { "id": "dawd-ce-3-4", "code": "RA3.d", "description": "Se han configurado y activado los mecanismos de seguridad del servidor de aplicaciones." },
+        { "id": "dawd-ce-3-5", "code": "RA3.e", "description": "Se han configurado y utilizado los componentes web del servidor de aplicaciones." },
+        { "id": "dawd-ce-3-6", "code": "RA3.f", "description": "Se han realizado los ajustes necesarios para el despliegue de aplicaciones sobre el servidor." },
+        { "id": "dawd-ce-3-7", "code": "RA3.g", "description": "Se han realizado pruebas de funcionamiento y rendimiento de la aplicacion Web desplegada." },
+        { "id": "dawd-ce-3-8", "code": "RA3.h", "description": "Se ha elaborado documentacion relativa a la administracion y recomendaciones de uso del servidor de aplicaciones." },
+        { "id": "dawd-ce-3-9", "code": "RA3.i", "description": "Se ha elaborado documentacion relativa al despliegue de aplicaciones sobre el servidor de aplicaciones." }
+      ]
+    },
+    {
+      "id": "dawd-lo-4",
+      "moduleId": "module-daw-0614",
+      "code": "RA4",
+      "description": "Administra servidores de transferencia de archivos, evaluando y aplicando criterios de configuracion que garanticen la disponibilidad del servicio.",
+      "weight": 16.66,
+      "assessmentCriteria": [
+        { "id": "dawd-ce-4-1", "code": "RA4.a", "description": "Se han instalado y configurado servidores de transferencia de archivos." },
+        { "id": "dawd-ce-4-2", "code": "RA4.b", "description": "Se han creado usuarios y grupos para el acceso remoto al servidor." },
+        { "id": "dawd-ce-4-3", "code": "RA4.c", "description": "Se ha configurado el acceso anonimo." },
+        { "id": "dawd-ce-4-4", "code": "RA4.d", "description": "Se ha comprobado el acceso al servidor, tanto en modo activo como en modo pasivo." },
+        { "id": "dawd-ce-4-5", "code": "RA4.e", "description": "Se han realizado pruebas con clientes en linea de comandos y clientes en modo grafico." },
+        { "id": "dawd-ce-4-6", "code": "RA4.f", "description": "Se ha utilizado el protocolo seguro de transferencia de archivos." },
+        { "id": "dawd-ce-4-7", "code": "RA4.g", "description": "Se han configurado y utilizado servicios de transferencia de archivos integrados en servidores web." },
+        { "id": "dawd-ce-4-8", "code": "RA4.h", "description": "Se ha utilizado el navegador como cliente del servicio de transferencia de archivos." },
+        { "id": "dawd-ce-4-9", "code": "RA4.i", "description": "Se ha elaborado documentacion relativa a la configuracion y administracion del servicio de transferencia de archivos." }
+      ]
+    },
+    {
+      "id": "dawd-lo-5",
+      "moduleId": "module-daw-0614",
+      "code": "RA5",
+      "description": "Verifica la ejecucion de aplicaciones Web comprobando los parametros de configuracion de servicios de red.",
+      "weight": 16.66,
+      "assessmentCriteria": [
+        { "id": "dawd-ce-5-1", "code": "RA5.a", "description": "Se ha descrito la estructura, nomenclatura y funcionalidad de los sistemas de nombres jerarquicos." },
+        { "id": "dawd-ce-5-2", "code": "RA5.b", "description": "Se han identificado las necesidades de configuracion del servidor de nombres en funcion de los requerimientos de ejecucion de las aplicaciones Web desplegadas." },
+        { "id": "dawd-ce-5-3", "code": "RA5.c", "description": "Se han identificado la funcion, elementos y estructuras logicas del servicio de directorio." },
+        { "id": "dawd-ce-5-4", "code": "RA5.d", "description": "Se ha analizado la configuracion y personalizacion del servicio de directorio." },
+        { "id": "dawd-ce-5-5", "code": "RA5.e", "description": "Se ha analizado la capacidad del servicio de directorio como mecanismo de autenticacion centralizada de los usuarios en una red." },
+        { "id": "dawd-ce-5-6", "code": "RA5.f", "description": "Se han especificado los parametros de configuracion en el servicio de directorios adecuados para el proceso de validacion de usuarios de la aplicacion Web." },
+        { "id": "dawd-ce-5-7", "code": "RA5.g", "description": "Se ha elaborado documentacion relativa a las adaptaciones realizadas en los servicios de red." }
+      ]
+    },
+    {
+      "id": "dawd-lo-6",
+      "moduleId": "module-daw-0614",
+      "code": "RA6",
+      "description": "Elabora la documentacion de la aplicacion Web evaluando y seleccionando herramientas de generacion de documentacion y control de versiones.",
+      "weight": 16.66,
+      "assessmentCriteria": [
+        { "id": "dawd-ce-6-1", "code": "RA6.a", "description": "Se han identificado diferentes herramientas de generacion de documentacion." },
+        { "id": "dawd-ce-6-2", "code": "RA6.b", "description": "Se han documentado los componentes software utilizando los generadores especificos de las plataformas." },
+        { "id": "dawd-ce-6-3", "code": "RA6.c", "description": "Se han utilizado diferentes formatos para la documentacion." },
+        { "id": "dawd-ce-6-4", "code": "RA6.d", "description": "Se han utilizado herramientas colaborativas para la elaboracion y mantenimiento de la documentacion." },
+        { "id": "dawd-ce-6-5", "code": "RA6.e", "description": "Se ha instalado, configurado y utilizado un sistema de control de versiones." },
+        { "id": "dawd-ce-6-6", "code": "RA6.f", "description": "Se ha garantizado la accesibilidad y seguridad de la documentacion almacenada por el sistema de control de versiones." },
+        { "id": "dawd-ce-6-7", "code": "RA6.g", "description": "Se ha documentado la instalacion, configuracion y uso del sistema de control de versiones utilizado." }
+      ]
+    }
+  ],
+  "contentUnits": [
+    {
+      "id": "dawd-unit-1",
+      "moduleId": "module-daw-0614",
+      "code": "UT_01",
+      "title": "Implantacion de arquitecturas Web",
+      "description": "Aspectos generales de las arquitecturas Web, evolucion de la web, protocolos en los servidores web, arquitecturas web, tecnologias de virtualizacion, virtualizacion en la nube y en contenedores, instalacion de Docker, servidores web, caracteristicas generales, instalacion de Apache, servidores de aplicaciones, caracteristicas generales, instalacion de Tomcat, documentacion de la instalacion e implementacion de una web, requerimientos previos y documentacion de los procesos."
+    },
+    {
+      "id": "dawd-unit-2",
+      "moduleId": "module-daw-0614",
+      "code": "UT_02",
+      "title": "Configuracion y administracion de servidores Web",
+      "description": "Funcionamiento del servidor Web, manejo de solicitudes HTTP, servicio de contenido estatico, servicio de contenido dinamico, gestion de errores y registro, configuracion avanzada del servidor web, parametros de administracion criticos, optimizacion del rendimiento y seguridad, ampliacion funcional del servidor con modulos, implementacion de hosts virtuales, protocolo HTTPS y certificados, control de acceso, despliegue en la nube y contenedores, implementacion de contenedores Docker y gestion de logs y analisis en tiempo real."
+    },
+    {
+      "id": "dawd-unit-3",
+      "moduleId": "module-daw-0614",
+      "code": "UT_03",
+      "title": "Configuracion y administracion de servidores de aplicaciones",
+      "description": "Servidor de aplicaciones, componentes del servidor, archivos de configuracion y bibliotecas compartidas, configuracion para cooperar con el servidor web, desarrollo y despliegue de aplicaciones Web, WAR, despliegue de aplicaciones, despliegue en contenedores Docker, despliegue en la nube, seguridad del servidor de aplicaciones, HTTPS, registro de acceso y gestion de sesiones, logs y monitorizacion."
+    },
+    {
+      "id": "dawd-unit-4",
+      "moduleId": "module-daw-0614",
+      "code": "UT_04",
+      "title": "Instalacion y administracion de servidores de transferencia de archivos",
+      "description": "Introduccion al servicio de transferencia de archivos, importancia en el despliegue, cliente FTP y modos de conexion, usuarios y grupos, tipos de transferencias, instalacion y configuracion del servidor, pruebas del servicio, integracion con el despliegue, permisos y cuotas de disco, uso de comandos y herramientas graficas, seguridad en el servicio, FTPS y SFTP."
+    },
+    {
+      "id": "dawd-unit-5",
+      "moduleId": "module-daw-0614",
+      "code": "UT_05",
+      "title": "Servicios de red implicados en el despliegue de una aplicacion web",
+      "description": "Servidores de nombres de dominio, sistema de nombres de dominio, jerarquia, ventajas del DNS, tipos de servidores y registros DNS, consultas y comandos, instalacion y configuracion de BIND, servicio de directorio, LDAP, LDIF, instalacion y configuracion de OpenLDAP, clientes de autenticacion y ejercicios en Docker."
+    },
+    {
+      "id": "dawd-unit-6",
+      "moduleId": "module-daw-0614",
+      "code": "UT_06",
+      "title": "Documentacion, control de versiones e integracion continua",
+      "description": "Documentacion, proceso de documentacion, JavaDoc, plantillas de codigo, PhpDocumentor, control de versiones, Git, soluciones comerciales en la nube, flujo de trabajo en metodologias agiles, integracion continua, Jenkins, Webhook con AWS y Docker Compose."
+    }
+  ],
+  "contentUnitLearningOutcomeMappings": [
+    { "contentUnitId": "dawd-unit-1", "learningOutcomeId": "dawd-lo-1" },
+    { "contentUnitId": "dawd-unit-2", "learningOutcomeId": "dawd-lo-2" },
+    { "contentUnitId": "dawd-unit-3", "learningOutcomeId": "dawd-lo-3" },
+    { "contentUnitId": "dawd-unit-4", "learningOutcomeId": "dawd-lo-4" },
+    { "contentUnitId": "dawd-unit-5", "learningOutcomeId": "dawd-lo-5" },
+    { "contentUnitId": "dawd-unit-6", "learningOutcomeId": "dawd-lo-6" }
+  ]
+}

@@ -6,13 +6,14 @@ describe("FileLearningPlanRepository", () => {
   it("loads a learning plan by module id", async () => {
     const repository = new FileLearningPlanRepository();
 
-    const learningPlan = await repository.findByModuleId("module-hospitality-1");
+    const learningPlan = await repository.findByModuleId("module-daw-0614");
 
     expect(learningPlan).not.toBeNull();
-    expect(learningPlan?.module.id).toBe("module-hospitality-1");
-    expect(learningPlan?.learningOutcomes).toHaveLength(2);
-    expect(learningPlan?.learningOutcomes[0].assessmentCriteria).toHaveLength(2);
-    expect(learningPlan?.contentUnits).toHaveLength(2);
+    expect(learningPlan?.module.id).toBe("module-daw-0614");
+    expect(learningPlan?.module.officialCode).toBe("IFCS03_0614");
+    expect(learningPlan?.learningOutcomes).toHaveLength(6);
+    expect(learningPlan?.learningOutcomes[0].assessmentCriteria).toHaveLength(9);
+    expect(learningPlan?.contentUnits).toHaveLength(6);
   });
 
   it("returns null when the learning plan file does not exist", async () => {

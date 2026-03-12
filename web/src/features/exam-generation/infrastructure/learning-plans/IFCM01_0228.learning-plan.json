@@ -1,0 +1,153 @@
+{
+  "module": {
+    "id": "module-smr-0228",
+    "officialCode": "IFCM01_0228",
+    "name": "Aplicaciones Web",
+    "code": "0228",
+    "weeklyHours": 4,
+    "totalHours": 135,
+    "description": "Modulo profesional de Aplicaciones Web del ciclo Sistemas Microinformaticos y Redes.",
+    "programId": "program-smr",
+    "programName": "Sistemas Microinformaticos y Redes",
+    "family": "Informatica y Comunicaciones",
+    "educationLevel": "Formacion Profesional de Grado Medio",
+    "europeanReference": "CINE-3"
+  },
+  "sourceDocument": {
+    "title": "Programacion Didactica - Aplicaciones Web",
+    "format": "docx",
+    "versionLabel": "2025-2026",
+    "academicYear": "2025/2026"
+  },
+  "learningOutcomes": [
+    {
+      "id": "aw-lo-1",
+      "moduleId": "module-smr-0228",
+      "code": "RA1",
+      "description": "Instala gestores de contenidos, identificando sus aplicaciones y configurandolos segun requerimientos.",
+      "weight": 20,
+      "assessmentCriteria": [
+        { "id": "aw-ce-1-1", "code": "RA1.a", "description": "Se han identificado los requerimientos necesarios para instalar gestores de contenidos." },
+        { "id": "aw-ce-1-2", "code": "RA1.b", "description": "Se han gestionado usuarios con roles diferentes." },
+        { "id": "aw-ce-1-3", "code": "RA1.c", "description": "Se ha personalizado la interfaz del gestor de contenidos." },
+        { "id": "aw-ce-1-4", "code": "RA1.d", "description": "Se han realizado pruebas de funcionamiento." },
+        { "id": "aw-ce-1-5", "code": "RA1.e", "description": "Se han realizado tareas de actualizacion del gestor de contenidos, especialmente las de seguridad." },
+        { "id": "aw-ce-1-6", "code": "RA1.f", "description": "Se han instalado y configurado los modulos y menus necesarios." },
+        { "id": "aw-ce-1-7", "code": "RA1.g", "description": "Se han activado y configurado los mecanismos de seguridad proporcionados por el propio gestor de contenidos." },
+        { "id": "aw-ce-1-8", "code": "RA1.h", "description": "Se han habilitado foros y establecido reglas de acceso." },
+        { "id": "aw-ce-1-9", "code": "RA1.i", "description": "Se han realizado pruebas de funcionamiento." },
+        { "id": "aw-ce-1-10", "code": "RA1.j", "description": "Se han realizado copias de seguridad de los contenidos del gestor." }
+      ]
+    },
+    {
+      "id": "aw-lo-2",
+      "moduleId": "module-smr-0228",
+      "code": "RA2",
+      "description": "Instala sistemas de gestion de aprendizaje a distancia, describiendo la estructura del sitio y la jerarquia de directorios generada.",
+      "weight": 20,
+      "assessmentCriteria": [
+        { "id": "aw-ce-2-1", "code": "RA2.a", "description": "Se ha reconocido la estructura del sitio y la jerarquia de directorios generada." },
+        { "id": "aw-ce-2-2", "code": "RA2.b", "description": "Se han realizado modificaciones en la estetica o aspecto del sitio." },
+        { "id": "aw-ce-2-3", "code": "RA2.c", "description": "Se han manipulado y generado perfiles personalizados." },
+        { "id": "aw-ce-2-4", "code": "RA2.d", "description": "Se ha comprobado la funcionalidad de las comunicaciones mediante foros, consultas, entre otros." },
+        { "id": "aw-ce-2-5", "code": "RA2.e", "description": "Se han importado y exportado contenidos en distintos formatos." },
+        { "id": "aw-ce-2-6", "code": "RA2.f", "description": "Se han realizado copias de seguridad y restauraciones." },
+        { "id": "aw-ce-2-7", "code": "RA2.g", "description": "Se han realizado informes de acceso y utilizacion del sitio." },
+        { "id": "aw-ce-2-8", "code": "RA2.h", "description": "Se ha comprobado la seguridad del sitio." }
+      ]
+    },
+    {
+      "id": "aw-lo-3",
+      "moduleId": "module-smr-0228",
+      "code": "RA3",
+      "description": "Instala servicios de gestion de archivos web, identificando sus aplicaciones y verificando su integridad.",
+      "weight": 20,
+      "assessmentCriteria": [
+        { "id": "aw-ce-3-1", "code": "RA3.a", "description": "Se ha establecido la utilidad de un servicio de gestion de archivos web." },
+        { "id": "aw-ce-3-2", "code": "RA3.b", "description": "Se han descrito diferentes aplicaciones de gestion de archivos web." },
+        { "id": "aw-ce-3-3", "code": "RA3.c", "description": "Se ha instalado y adaptado una herramienta de gestion de archivos web." },
+        { "id": "aw-ce-3-4", "code": "RA3.d", "description": "Se han creado y clasificado cuentas de usuario en funcion de sus permisos." },
+        { "id": "aw-ce-3-5", "code": "RA3.e", "description": "Se han gestionado archivos y directorios." },
+        { "id": "aw-ce-3-6", "code": "RA3.f", "description": "Se han utilizado archivos de informacion adicional." },
+        { "id": "aw-ce-3-7", "code": "RA3.g", "description": "Se han aplicado criterios de indexacion sobre los archivos y directorios." },
+        { "id": "aw-ce-3-8", "code": "RA3.h", "description": "Se ha comprobado la seguridad del gestor de archivos." }
+      ]
+    },
+    {
+      "id": "aw-lo-4",
+      "moduleId": "module-smr-0228",
+      "code": "RA4",
+      "description": "Instala aplicaciones de ofimatica web, describiendo sus caracteristicas y entornos de uso.",
+      "weight": 20,
+      "assessmentCriteria": [
+        { "id": "aw-ce-4-1", "code": "RA4.a", "description": "Se ha establecido la utilidad de las aplicaciones de ofimatica web." },
+        { "id": "aw-ce-4-2", "code": "RA4.b", "description": "Se han descrito diferentes aplicaciones de ofimatica web (procesador de textos, hoja de calculo, entre otras)." },
+        { "id": "aw-ce-4-3", "code": "RA4.c", "description": "Se han instalado aplicaciones de ofimatica web." },
+        { "id": "aw-ce-4-4", "code": "RA4.d", "description": "Se han gestionado las cuentas de usuario." },
+        { "id": "aw-ce-4-5", "code": "RA4.e", "description": "Se han aplicado criterios de seguridad en el acceso de los usuarios." },
+        { "id": "aw-ce-4-6", "code": "RA4.f", "description": "Se han reconocido las prestaciones especificas de cada una de las aplicaciones instaladas." },
+        { "id": "aw-ce-4-7", "code": "RA4.g", "description": "Se han utilizado las aplicaciones de forma colaborativa." }
+      ]
+    },
+    {
+      "id": "aw-lo-5",
+      "moduleId": "module-smr-0228",
+      "code": "RA5",
+      "description": "Instala aplicaciones web de escritorio, describiendo sus caracteristicas y entornos de uso.",
+      "weight": 20,
+      "assessmentCriteria": [
+        { "id": "aw-ce-5-1", "code": "RA5.a", "description": "Se han descrito diferentes aplicaciones web de escritorio." },
+        { "id": "aw-ce-5-2", "code": "RA5.b", "description": "Se han instalado aplicaciones para proveer de acceso web al servicio de correo electronico." },
+        { "id": "aw-ce-5-3", "code": "RA5.c", "description": "Se han configurado las aplicaciones para integrarlas con un servidor de correo." },
+        { "id": "aw-ce-5-4", "code": "RA5.d", "description": "Se han gestionado las cuentas de usuario." },
+        { "id": "aw-ce-5-5", "code": "RA5.e", "description": "Se ha verificado el acceso al correo electronico." },
+        { "id": "aw-ce-5-6", "code": "RA5.f", "description": "Se han instalado aplicaciones de calendario web." },
+        { "id": "aw-ce-5-7", "code": "RA5.g", "description": "Se han reconocido las prestaciones especificas de las aplicaciones instaladas (citas, tareas, entre otras)." }
+      ]
+    }
+  ],
+  "contentUnits": [
+    {
+      "id": "aw-unit-1",
+      "moduleId": "module-smr-0228",
+      "code": "UT_01",
+      "title": "Gestores de Contenidos",
+      "description": "Gestores de contenidos, sitios web, tecnologias de la web, HTML, CSS, Javascript, lenguajes de scripts de servidor, herramientas de diseno web, paginas web y bases de datos, caracteristicas, aplicaciones y usos, ventajas e inconvenientes, tipos de gestores, instalacion, interfaz, modulos, menus, usuarios, configuracion, personalizacion del entorno, mantenimiento, actualizaciones, pruebas de funcionamiento, copias de seguridad y prospectiva."
+    },
+    {
+      "id": "aw-unit-2",
+      "moduleId": "module-smr-0228",
+      "code": "UT_02",
+      "title": "Sistemas de Gestion de Aprendizaje a Distancia",
+      "description": "Gestores de aprendizaje, sistemas cliente-servidor, comparativa entre sistemas, aprendizaje a distancia, funciones pedagogicas, elementos de comunicacion, utilidades, materiales, actividades, instalacion y configuracion, estructura y jerarquia de directorios, interfaz, entorno, usuarios, creacion de cursos, administracion de usuarios, accesibilidad, gestion de archivos, informes, copias de seguridad, restauraciones, importacion y exportacion de contenidos, seguridad y actualizaciones."
+    },
+    {
+      "id": "aw-unit-3",
+      "moduleId": "module-smr-0228",
+      "code": "UT_03",
+      "title": "Servicios de Gestion de Archivos Web",
+      "description": "Servicios de gestion de archivos web, aplicaciones, ventajas e inconvenientes, herramientas, tipos de usuarios, permisos, operaciones basicas, instalacion y configuracion, navegacion, creacion de recursos compartidos, administracion de usuarios y recursos y politica de seguridad."
+    },
+    {
+      "id": "aw-unit-4",
+      "moduleId": "module-smr-0228",
+      "code": "UT_04",
+      "title": "Aplicaciones de Ofimatica Web",
+      "description": "Aplicaciones ofimaticas web, utilidad, ventajas e inconvenientes, procesador de textos, hoja de calculo, aplicaciones de uso comun, instalacion y configuracion, herramientas, trabajo colaborativo, mantenimiento, gestion de usuarios, permisos y politica de seguridad."
+    },
+    {
+      "id": "aw-unit-5",
+      "moduleId": "module-smr-0228",
+      "code": "UT_05",
+      "title": "Aplicaciones Web de Escritorio",
+      "description": "Aplicaciones web de escritorio, utilidades, ventajas, inconvenientes, disponibilidad, instalacion y configuracion, gestion de software, usuarios y sesiones, aplicaciones de correo web, integracion con correo y calendario web."
+    }
+  ],
+  "contentUnitLearningOutcomeMappings": [
+    { "contentUnitId": "aw-unit-1", "learningOutcomeId": "aw-lo-1" },
+    { "contentUnitId": "aw-unit-2", "learningOutcomeId": "aw-lo-2" },
+    { "contentUnitId": "aw-unit-3", "learningOutcomeId": "aw-lo-3" },
+    { "contentUnitId": "aw-unit-4", "learningOutcomeId": "aw-lo-4" },
+    { "contentUnitId": "aw-unit-5", "learningOutcomeId": "aw-lo-5" }
+  ]
+}
