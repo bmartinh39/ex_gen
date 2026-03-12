@@ -1,0 +1,70 @@
+{
+  "module": {
+    "id": "module-hospitality-1",
+    "name": "Hospitality and Customer Service",
+    "credits": 8,
+    "description": "Core hospitality operations, customer attention, and service delivery.",
+    "programId": "program-hospitality-services"
+  },
+  "sourceDocument": {
+    "title": "Hospitality Module Learning Plan",
+    "format": "pdf",
+    "versionLabel": "2025-2026"
+  },
+  "learningOutcomes": [
+    {
+      "id": "hos-lo-1",
+      "moduleId": "module-hospitality-1",
+      "description": "Organises hospitality service operations according to the module plan.",
+      "assessmentCriteria": [
+        {
+          "id": "hos-ce-1-1",
+          "description": "Identifies the phases of the hospitality service workflow."
+        },
+        {
+          "id": "hos-ce-1-2",
+          "description": "Selects the appropriate resources for each service activity."
+        }
+      ]
+    },
+    {
+      "id": "hos-lo-2",
+      "moduleId": "module-hospitality-1",
+      "description": "Applies customer service standards in realistic hospitality scenarios.",
+      "assessmentCriteria": [
+        {
+          "id": "hos-ce-2-1",
+          "description": "Communicates with clients using the expected professional tone."
+        },
+        {
+          "id": "hos-ce-2-2",
+          "description": "Resolves routine customer incidents following protocol."
+        }
+      ]
+    }
+  ],
+  "contentUnits": [
+    {
+      "id": "hos-unit-1",
+      "moduleId": "module-hospitality-1",
+      "title": "Service workflow foundations",
+      "description": "Operational stages, service preparation, and coordination."
+    },
+    {
+      "id": "hos-unit-2",
+      "moduleId": "module-hospitality-1",
+      "title": "Customer care and incident handling",
+      "description": "Communication standards, complaint handling, and service recovery."
+    }
+  ],
+  "contentUnitLearningOutcomeMappings": [
+    {
+      "contentUnitId": "hos-unit-1",
+      "learningOutcomeId": "hos-lo-1"
+    },
+    {
+      "contentUnitId": "hos-unit-2",
+      "learningOutcomeId": "hos-lo-2"
+    }
+  ]
+}

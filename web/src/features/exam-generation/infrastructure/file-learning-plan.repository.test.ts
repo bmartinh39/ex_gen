@@ -1,0 +1,25 @@
+import { describe, expect, it } from "vitest";
+
+import { FileLearningPlanRepository } from "./file-learning-plan.repository";
+
+describe("FileLearningPlanRepository", () => {
+  it("loads a learning plan by module id", async () => {
+    const repository = new FileLearningPlanRepository();
+
+    const learningPlan = await repository.findByModuleId("module-hospitality-1");
+
+    expect(learningPlan).not.toBeNull();
+    expect(learningPlan?.module.id).toBe("module-hospitality-1");
+    expect(learningPlan?.learningOutcomes).toHaveLength(2);
+    expect(learningPlan?.learningOutcomes[0].assessmentCriteria).toHaveLength(2);
+    expect(learningPlan?.contentUnits).toHaveLength(2);
+  });
+
+  it("returns null when the learning plan file does not exist", async () => {
+    const repository = new FileLearningPlanRepository();
+
+    await expect(
+      repository.findByModuleId("module-that-does-not-exist"),
+    ).resolves.toBeNull();
+  });
+});
