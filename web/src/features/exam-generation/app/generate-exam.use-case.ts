@@ -38,12 +38,13 @@ export function generateExamUseCase(
   let candidatePool = input.availableQuestions;
   const hasCoverageContext =
     (input.learningOutcomes?.length ?? 0) > 0 &&
-    (input.assessmentCriteria?.length ?? 0) > 0;
+    (input.learningOutcomes?.some(
+      (learningOutcome) => learningOutcome.assessmentCriteria.length > 0,
+    ) ?? false);
   const targetResult = hasCoverageContext
     ? buildCeTargetQuestionCounts(
         input.questionCount,
         input.learningOutcomes ?? [],
-        input.assessmentCriteria ?? [],
         input.coverageWeights,
       )
     : null;

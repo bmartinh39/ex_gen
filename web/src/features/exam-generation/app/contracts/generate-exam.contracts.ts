@@ -1,5 +1,4 @@
 import type {
-  AssessmentCriterion,
   Difficulty,
   Exam,
   LearningOutcome,
@@ -36,7 +35,6 @@ export type GenerateExamUseCaseInput = {
   availableQuestions: Question[];
   distribution?: QuestionDistribution;
   learningOutcomes?: LearningOutcome[];
-  assessmentCriteria?: AssessmentCriterion[];
   coverageWeights?: CoverageWeights;
 };
 

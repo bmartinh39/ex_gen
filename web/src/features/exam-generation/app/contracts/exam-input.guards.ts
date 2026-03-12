@@ -10,7 +10,7 @@ import type {
   QuestionDistribution,
   QuestionIntent,
 } from "../../domain";
-import { isAssessmentCriterion, isLearningOutcome } from "./curriculum.guards";
+import { isLearningOutcome } from "./curriculum.guards";
 import { isCoverageWeights } from "./coverage-weights.guards";
 import {
   isFiniteNumber,
@@ -21,7 +21,6 @@ import {
 const MAX_QUESTION_COUNT = 200;
 const MAX_AVAILABLE_QUESTIONS = 2000;
 const MAX_LEARNING_OUTCOMES = 500;
-const MAX_ASSESSMENT_CRITERIA = 2000;
 
 export type ValidateExamRequestBody = {
   exam: Exam;
@@ -180,12 +179,6 @@ export function isGenerateExamUseCaseInput(
       candidate.learningOutcomes.length <= MAX_LEARNING_OUTCOMES &&
       candidate.learningOutcomes.every(isLearningOutcome));
 
-  const hasValidAssessmentCriteria =
-    candidate.assessmentCriteria === undefined ||
-    (Array.isArray(candidate.assessmentCriteria) &&
-      candidate.assessmentCriteria.length <= MAX_ASSESSMENT_CRITERIA &&
-      candidate.assessmentCriteria.every(isAssessmentCriterion));
-
   const hasValidCoverageWeights =
     candidate.coverageWeights === undefined ||
     isCoverageWeights(candidate.coverageWeights);
@@ -203,7 +196,6 @@ export function isGenerateExamUseCaseInput(
     (candidate.distribution === undefined ||
       isQuestionDistribution(candidate.distribution)) &&
     hasValidLearningOutcomes &&
-    hasValidAssessmentCriteria &&
     hasValidCoverageWeights
   );
 }

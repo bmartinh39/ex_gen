@@ -15,6 +15,18 @@ function buildQuestion(id: string, intent: "theoretical" | "practical"): Questio
   };
 }
 
+function buildLearningOutcome(
+  id: string,
+  assessmentCriteria: AssessmentCriterion[],
+): LearningOutcome {
+  return {
+    id,
+    moduleId: "module-1",
+    description: `Learning outcome ${id}`,
+    assessmentCriteria,
+  };
+}
+
 describe("generateExamUseCase", () => {
   it("generates an exam using the requested distribution", () => {
     const availableQuestions: Question[] = [
@@ -123,15 +135,14 @@ describe("generateExamUseCase", () => {
 
   it("uses equal default weights for learning outcomes and assessment criteria", () => {
     const learningOutcomes: LearningOutcome[] = [
-      { id: "ra-1", moduleId: "module-1", description: "RA 1" },
-      { id: "ra-2", moduleId: "module-1", description: "RA 2" },
-    ];
-
-    const assessmentCriteria: AssessmentCriterion[] = [
-      { id: "ce-1", learningOutcomeId: "ra-1", description: "CE 1" },
-      { id: "ce-2", learningOutcomeId: "ra-1", description: "CE 2" },
-      { id: "ce-3", learningOutcomeId: "ra-2", description: "CE 3" },
-      { id: "ce-4", learningOutcomeId: "ra-2", description: "CE 4" },
+      buildLearningOutcome("ra-1", [
+        { id: "ce-1", description: "CE 1" },
+        { id: "ce-2", description: "CE 2" },
+      ]),
+      buildLearningOutcome("ra-2", [
+        { id: "ce-3", description: "CE 3" },
+        { id: "ce-4", description: "CE 4" },
+      ]),
     ];
 
     const availableQuestions: Question[] = [
@@ -153,7 +164,6 @@ describe("generateExamUseCase", () => {
       questionCount: 4,
       availableQuestions,
       learningOutcomes,
-      assessmentCriteria,
     });
 
     expect(output.errors).toEqual([]);
@@ -167,13 +177,8 @@ describe("generateExamUseCase", () => {
 
   it("honors explicit learning outcome weights", () => {
     const learningOutcomes: LearningOutcome[] = [
-      { id: "ra-1", moduleId: "module-1", description: "RA 1" },
-      { id: "ra-2", moduleId: "module-1", description: "RA 2" },
-    ];
-
-    const assessmentCriteria: AssessmentCriterion[] = [
-      { id: "ce-1", learningOutcomeId: "ra-1", description: "CE 1" },
-      { id: "ce-2", learningOutcomeId: "ra-2", description: "CE 2" },
+      buildLearningOutcome("ra-1", [{ id: "ce-1", description: "CE 1" }]),
+      buildLearningOutcome("ra-2", [{ id: "ce-2", description: "CE 2" }]),
     ];
 
     const availableQuestions: Question[] = [
@@ -191,7 +196,6 @@ describe("generateExamUseCase", () => {
       questionCount: 4,
       availableQuestions,
       learningOutcomes,
-      assessmentCriteria,
       coverageWeights: {
         learningOutcomeWeights: [
           { learningOutcomeId: "ra-1", percentage: 75 },
@@ -219,11 +223,7 @@ describe("generateExamUseCase", () => {
 
   it("enforces theoretical/practical distribution before coverage selection", () => {
     const learningOutcomes: LearningOutcome[] = [
-      { id: "ra-1", moduleId: "module-1", description: "RA 1" },
-    ];
-
-    const assessmentCriteria: AssessmentCriterion[] = [
-      { id: "ce-1", learningOutcomeId: "ra-1", description: "CE 1" },
+      buildLearningOutcome("ra-1", [{ id: "ce-1", description: "CE 1" }]),
     ];
 
     const availableQuestions: Question[] = [
@@ -250,7 +250,6 @@ describe("generateExamUseCase", () => {
         },
       },
       learningOutcomes,
-      assessmentCriteria,
     });
 
     expect(output.errors).toEqual([]);
@@ -269,11 +268,7 @@ describe("generateExamUseCase", () => {
 
   it("ranks each intent pool by CE target usefulness when coverage context is present", () => {
     const learningOutcomes: LearningOutcome[] = [
-      { id: "ra-1", moduleId: "module-1", description: "RA 1" },
-    ];
-
-    const assessmentCriteria: AssessmentCriterion[] = [
-      { id: "ce-1", learningOutcomeId: "ra-1", description: "CE 1" },
+      buildLearningOutcome("ra-1", [{ id: "ce-1", description: "CE 1" }]),
     ];
 
     const availableQuestions: Question[] = [
@@ -315,7 +310,6 @@ describe("generateExamUseCase", () => {
         },
       },
       learningOutcomes,
-      assessmentCriteria,
     });
 
     expect(output.errors).toEqual([]);
@@ -328,13 +322,8 @@ describe("generateExamUseCase", () => {
 
   it("returns warnings instead of errors when CE coverage targets are not fully met", () => {
     const learningOutcomes: LearningOutcome[] = [
-      { id: "ra-1", moduleId: "module-1", description: "RA 1" },
-      { id: "ra-2", moduleId: "module-1", description: "RA 2" },
-    ];
-
-    const assessmentCriteria: AssessmentCriterion[] = [
-      { id: "ce-1", learningOutcomeId: "ra-1", description: "CE 1" },
-      { id: "ce-2", learningOutcomeId: "ra-2", description: "CE 2" },
+      buildLearningOutcome("ra-1", [{ id: "ce-1", description: "CE 1" }]),
+      buildLearningOutcome("ra-2", [{ id: "ce-2", description: "CE 2" }]),
     ];
 
     const availableQuestions: Question[] = [
@@ -359,7 +348,6 @@ describe("generateExamUseCase", () => {
         },
       },
       learningOutcomes,
-      assessmentCriteria,
       coverageWeights: {
         learningOutcomeWeights: [
           { learningOutcomeId: "ra-1", percentage: 75 },
@@ -378,11 +366,7 @@ describe("generateExamUseCase", () => {
 
   it("prefers higher CE affinity when binary CE overlap is equivalent", () => {
     const learningOutcomes: LearningOutcome[] = [
-      { id: "ra-1", moduleId: "module-1", description: "RA 1" },
-    ];
-
-    const assessmentCriteria: AssessmentCriterion[] = [
-      { id: "ce-1", learningOutcomeId: "ra-1", description: "CE 1" },
+      buildLearningOutcome("ra-1", [{ id: "ce-1", description: "CE 1" }]),
     ];
 
     const availableQuestions: Question[] = [
@@ -406,7 +390,6 @@ describe("generateExamUseCase", () => {
       questionCount: 1,
       availableQuestions,
       learningOutcomes,
-      assessmentCriteria,
     });
 
     expect(output.errors).toEqual([]);
@@ -441,11 +424,7 @@ describe("generateExamUseCase", () => {
 
   it("treats CE ids without explicit coverage as a lower-strength eligible match", () => {
     const learningOutcomes: LearningOutcome[] = [
-      { id: "ra-1", moduleId: "module-1", description: "RA 1" },
-    ];
-
-    const assessmentCriteria: AssessmentCriterion[] = [
-      { id: "ce-1", learningOutcomeId: "ra-1", description: "CE 1" },
+      buildLearningOutcome("ra-1", [{ id: "ce-1", description: "CE 1" }]),
     ];
 
     const availableQuestions: Question[] = [
@@ -468,7 +447,6 @@ describe("generateExamUseCase", () => {
       questionCount: 1,
       availableQuestions,
       learningOutcomes,
-      assessmentCriteria,
     });
 
     expect(output.errors).toEqual([]);
@@ -478,11 +456,7 @@ describe("generateExamUseCase", () => {
 
   it("uses CE ids as the eligibility gate when explicit coverage references an unrelated CE", () => {
     const learningOutcomes: LearningOutcome[] = [
-      { id: "ra-1", moduleId: "module-1", description: "RA 1" },
-    ];
-
-    const assessmentCriteria: AssessmentCriterion[] = [
-      { id: "ce-1", learningOutcomeId: "ra-1", description: "CE 1" },
+      buildLearningOutcome("ra-1", [{ id: "ce-1", description: "CE 1" }]),
     ];
 
     const availableQuestions: Question[] = [
@@ -505,7 +479,6 @@ describe("generateExamUseCase", () => {
       questionCount: 1,
       availableQuestions,
       learningOutcomes,
-      assessmentCriteria,
     });
 
     expect(output.errors).toEqual([]);

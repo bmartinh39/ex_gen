@@ -1,4 +1,4 @@
-import type { AssessmentCriterion, LearningOutcome } from "../../domain";
+import type { LearningOutcome } from "../../domain";
 import type { CoverageWeights } from "../contracts/generate-exam.contracts";
 import {
   allocateTargetsByLargestRemainder,
@@ -8,7 +8,6 @@ import {
 export function buildCeTargetQuestionCounts(
   questionCount: number,
   learningOutcomes: LearningOutcome[],
-  assessmentCriteria: AssessmentCriterion[],
   coverageWeights: CoverageWeights | undefined,
 ): { ceTargetCounts: Record<string, number>; errors: string[] } {
   const errors: string[] = [];
@@ -16,20 +15,15 @@ export function buildCeTargetQuestionCounts(
   const ceByRa = new Map<string, string[]>();
   const ceToRa = new Map<string, string>();
 
-  for (const loId of loIds) {
-    ceByRa.set(loId, []);
-  }
+  for (const learningOutcome of learningOutcomes) {
+    const criterionIds = learningOutcome.assessmentCriteria.map(
+      (criterion) => criterion.id,
+    );
+    ceByRa.set(learningOutcome.id, criterionIds);
 
-  for (const ce of assessmentCriteria) {
-    if (!ceByRa.has(ce.learningOutcomeId)) {
-      errors.push(
-        `Assessment criterion '${ce.id}' references unknown learning outcome '${ce.learningOutcomeId}'.`,
-      );
-      continue;
+    for (const criterion of learningOutcome.assessmentCriteria) {
+      ceToRa.set(criterion.id, learningOutcome.id);
     }
-
-    ceByRa.get(ce.learningOutcomeId)?.push(ce.id);
-    ceToRa.set(ce.id, ce.learningOutcomeId);
   }
 
   if (errors.length > 0) {
@@ -40,7 +34,7 @@ export function buildCeTargetQuestionCounts(
     const knownRa = ceToRa.get(weight.assessmentCriterionId);
     if (!knownRa) {
       errors.push(
-        `Assessment criterion weight '${weight.assessmentCriterionId}' does not exist in assessmentCriteria.`,
+        `Assessment criterion weight '${weight.assessmentCriterionId}' does not exist in learningOutcomes.`,
       );
       continue;
     }

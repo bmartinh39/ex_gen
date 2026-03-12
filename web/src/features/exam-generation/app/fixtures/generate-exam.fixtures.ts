@@ -16,22 +16,29 @@ function buildLearningOutcomes(
       id,
       moduleId,
       description: `Learning outcome ${index + 1} for ${moduleId}.`,
+      assessmentCriteria: [],
     };
   });
 }
 
-function buildAssessmentCriteria(
+function attachAssessmentCriteria(
   learningOutcomes: LearningOutcome[],
   perLearningOutcome: number,
   prefix: string,
-): AssessmentCriterion[] {
-  return learningOutcomes.flatMap((learningOutcome, loIndex) =>
-    Array.from({ length: perLearningOutcome }, (_, criterionIndex) => ({
+): LearningOutcome[] {
+  return learningOutcomes.map((learningOutcome, loIndex) => ({
+    ...learningOutcome,
+    assessmentCriteria: Array.from({ length: perLearningOutcome }, (_, criterionIndex) => ({
       id: `${prefix}-ce-${loIndex + 1}-${criterionIndex + 1}`,
-      learningOutcomeId: learningOutcome.id,
       description: `Assessment criterion ${criterionIndex + 1} for ${learningOutcome.id}.`,
     })),
-  );
+  }));
+}
+
+function flattenAssessmentCriteria(
+  learningOutcomes: LearningOutcome[],
+): AssessmentCriterion[] {
+  return learningOutcomes.flatMap((learningOutcome) => learningOutcome.assessmentCriteria);
 }
 
 function buildQuestion(
@@ -86,10 +93,12 @@ function buildQuestion(
 }
 
 function buildQuestionBank(
-  criteria: AssessmentCriterion[],
+  learningOutcomes: LearningOutcome[],
   count: number,
   label: string,
 ): Question[] {
+  const criteria = flattenAssessmentCriteria(learningOutcomes);
+
   return Array.from({ length: count }, (_, index) => {
     const difficulty = (["easy", "medium", "hard"] as const)[index % 3];
     const intent = (["theoretical", "practical"] as const)[index % 2];
@@ -103,12 +112,18 @@ function buildQuestionBank(
 }
 
 const moduleAId = "module-hospitality-1";
-const learningOutcomesA = buildLearningOutcomes(moduleAId, "hos", 6);
-const assessmentCriteriaA = buildAssessmentCriteria(learningOutcomesA, 8, "hos");
+const learningOutcomesA = attachAssessmentCriteria(
+  buildLearningOutcomes(moduleAId, "hos", 6),
+  8,
+  "hos",
+);
 
 const moduleBId = "module-healthcare-1";
-const learningOutcomesB = buildLearningOutcomes(moduleBId, "hea", 7);
-const assessmentCriteriaB = buildAssessmentCriteria(learningOutcomesB, 7, "hea");
+const learningOutcomesB = attachAssessmentCriteria(
+  buildLearningOutcomes(moduleBId, "hea", 7),
+  7,
+  "hea",
+);
 
 export const fixtureGenerateExamHospitality: GenerateExamUseCaseInput = {
   examId: "exam-hos-40",
@@ -117,7 +132,7 @@ export const fixtureGenerateExamHospitality: GenerateExamUseCaseInput = {
   frameworkId: "es",
   difficulty: "medium",
   questionCount: 40,
-  availableQuestions: buildQuestionBank(assessmentCriteriaA, 40, "hos"),
+  availableQuestions: buildQuestionBank(learningOutcomesA, 40, "hos"),
   distribution: {
     byCount: {
       theoreticalPct: 50,
@@ -126,7 +141,6 @@ export const fixtureGenerateExamHospitality: GenerateExamUseCaseInput = {
     },
   },
   learningOutcomes: learningOutcomesA,
-  assessmentCriteria: assessmentCriteriaA,
 };
 
 export const fixtureGenerateExamHealthcare: GenerateExamUseCaseInput = {
@@ -136,7 +150,7 @@ export const fixtureGenerateExamHealthcare: GenerateExamUseCaseInput = {
   frameworkId: "es",
   difficulty: "hard",
   questionCount: 40,
-  availableQuestions: buildQuestionBank(assessmentCriteriaB, 40, "hea"),
+  availableQuestions: buildQuestionBank(learningOutcomesB, 40, "hea"),
   distribution: {
     byCount: {
       theoreticalPct: 50,
@@ -145,7 +159,6 @@ export const fixtureGenerateExamHealthcare: GenerateExamUseCaseInput = {
     },
   },
   learningOutcomes: learningOutcomesB,
-  assessmentCriteria: assessmentCriteriaB,
   coverageWeights: {
     learningOutcomeWeights: [
       { learningOutcomeId: learningOutcomesB[0].id, percentage: 18 },
