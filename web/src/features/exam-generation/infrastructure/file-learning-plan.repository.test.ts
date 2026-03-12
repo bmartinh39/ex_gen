@@ -22,4 +22,14 @@ describe("FileLearningPlanRepository", () => {
       repository.findByModuleId("module-that-does-not-exist"),
     ).resolves.toBeNull();
   });
+
+  it("loads a learning plan even when the filename is based on the official code", async () => {
+    const repository = new FileLearningPlanRepository();
+
+    const learningPlan = await repository.findByModuleId("module-daw-0613");
+
+    expect(learningPlan).not.toBeNull();
+    expect(learningPlan?.module.officialCode).toBe("IFCS03_0613");
+    expect(learningPlan?.module.code).toBe("0613");
+  });
 });

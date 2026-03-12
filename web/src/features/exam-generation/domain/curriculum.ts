@@ -3,9 +3,18 @@ import type { VocationalProgramLevel } from "./shared";
 export type Module = {
   id: string;
   name: string;
-  credits: number;
+  officialCode?: string;
+  code?: string;
+  credits?: number;
+  weeklyHours?: number;
+  totalHours?: number;
+  legacyPlanHours?: number;
   description?: string;
   programId: string;
+  programName?: string;
+  family?: string;
+  educationLevel?: string;
+  europeanReference?: string;
 };
 
 export type VocationalProgram = {
@@ -25,12 +34,15 @@ export type VocationalFamily = {
 export type LearningOutcome = {
   id: string;
   moduleId: string;
+  code?: string;
   description: string;
+  weight?: number;
   assessmentCriteria: AssessmentCriterion[];
 };
 
 export type AssessmentCriterion = {
   id: string;
+  code?: string;
   description: string;
 };
 
@@ -38,11 +50,13 @@ export type LearningPlanSourceDocument = {
   title: string;
   format: "pdf" | "doc" | "docx" | "markdown" | "json";
   versionLabel?: string;
+  academicYear?: string;
 };
 
 export type LearningPlanContentUnit = {
   id: string;
   moduleId: string;
+  code?: string;
   title: string;
   description?: string;
 };

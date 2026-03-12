@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 
 import type { LearningPlan } from "../domain";
@@ -14,14 +14,32 @@ export class FileLearningPlanRepository implements LearningPlanRepository {
   ) {}
 
   async findByModuleId(moduleId: string): Promise<LearningPlan | null> {
-    const filePath = path.join(this.directoryPath, `${moduleId}.learning-plan.json`);
+    const fileNames = await readdir(this.directoryPath);
 
+    for (const fileName of fileNames) {
+      if (!fileName.endsWith(".learning-plan.json")) {
+        continue;
+      }
+
+      const learningPlan = await this.readLearningPlan(
+        path.join(this.directoryPath, fileName),
+      );
+
+      if (learningPlan.module.id === moduleId) {
+        return learningPlan;
+      }
+    }
+
+    return null;
+  }
+
+  private async readLearningPlan(filePath: string): Promise<LearningPlan> {
     let rawContent: string;
     try {
       rawContent = await readFile(filePath, "utf-8");
     } catch (error) {
       if (isMissingFileError(error)) {
-        return null;
+        throw new Error(`Learning plan file '${filePath}' could not be found.`);
       }
 
       throw error;
@@ -36,12 +54,6 @@ export class FileLearningPlanRepository implements LearningPlanRepository {
 
     if (!isLearningPlan(parsed)) {
       throw new Error(`Learning plan file '${filePath}' does not match the domain schema.`);
-    }
-
-    if (parsed.module.id !== moduleId) {
-      throw new Error(
-        `Learning plan file '${filePath}' does not match requested module '${moduleId}'.`,
-      );
     }
 
     return parsed;

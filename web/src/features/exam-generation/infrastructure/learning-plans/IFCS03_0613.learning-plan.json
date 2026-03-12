@@ -1,0 +1,193 @@
+{
+  "module": {
+    "id": "module-daw-0613",
+    "officialCode": "IFCS03_0613",
+    "name": "Desarrollo Web en Entorno Servidor",
+    "code": "0613",
+    "weeklyHours": 7,
+    "totalHours": 265,
+    "legacyPlanHours": 180,
+    "description": "Modulo profesional de Desarrollo Web en Entorno Servidor del ciclo Desarrollo de Aplicaciones Web.",
+    "programId": "program-daw",
+    "programName": "Desarrollo de Aplicaciones Web",
+    "family": "Informatica y Comunicaciones",
+    "educationLevel": "Formacion Profesional de Grado Superior",
+    "europeanReference": "CINE-5b"
+  },
+  "sourceDocument": {
+    "title": "Programacion Didactica - Desarrollo Web en Entorno Servidor",
+    "format": "docx",
+    "versionLabel": "2025-2026",
+    "academicYear": "2025/2026"
+  },
+  "learningOutcomes": [
+    {
+      "id": "dwes-lo-1",
+      "moduleId": "module-daw-0613",
+      "code": "RA1",
+      "description": "Selecciona las arquitecturas y tecnologias de programacion web en entorno servidor, analizando sus capacidades y caracteristicas propias.",
+      "weight": 11.111,
+      "assessmentCriteria": [
+        { "id": "dwes-ce-1-1", "code": "RA1.a", "description": "Se han caracterizado y diferenciado los modelos de ejecucion de codigo en el servidor y en el cliente web." },
+        { "id": "dwes-ce-1-2", "code": "RA1.b", "description": "Se han reconocido las ventajas que proporciona la generacion dinamica de paginas." },
+        { "id": "dwes-ce-1-3", "code": "RA1.c", "description": "Se han identificado los mecanismos de ejecucion de codigo en los servidores web." },
+        { "id": "dwes-ce-1-4", "code": "RA1.d", "description": "Se han reconocido las funcionalidades que aportan los servidores de aplicaciones y su integracion con los servidores web." },
+        { "id": "dwes-ce-1-5", "code": "RA1.e", "description": "Se han identificado y caracterizado los principales lenguajes y tecnologias relacionados con la programacion web en entorno servidor." },
+        { "id": "dwes-ce-1-6", "code": "RA1.f", "description": "Se han verificado los mecanismos de integracion de los lenguajes de marcas con los lenguajes de programacion en entorno servidor." },
+        { "id": "dwes-ce-1-7", "code": "RA1.g", "description": "Se han reconocido y evaluado las herramientas y frameworks de programacion en entorno servidor." }
+      ]
+    },
+    {
+      "id": "dwes-lo-2",
+      "moduleId": "module-daw-0613",
+      "code": "RA2",
+      "description": "Escribe sentencias ejecutables por un servidor web reconociendo y aplicando procedimientos de integracion del codigo en lenguajes de marcas.",
+      "weight": 11.111,
+      "assessmentCriteria": [
+        { "id": "dwes-ce-2-1", "code": "RA2.a", "description": "Se han reconocido los mecanismos de generacion de paginas web a partir de lenguajes de marcas con codigo embebido." },
+        { "id": "dwes-ce-2-2", "code": "RA2.b", "description": "Se han identificado las principales tecnologias asociadas." },
+        { "id": "dwes-ce-2-3", "code": "RA2.c", "description": "Se han utilizado etiquetas para la inclusion de codigo en el lenguaje de marcas." },
+        { "id": "dwes-ce-2-4", "code": "RA2.d", "description": "Se ha reconocido la sintaxis del lenguaje de programacion que se ha de utilizar." },
+        { "id": "dwes-ce-2-5", "code": "RA2.e", "description": "Se han escrito sentencias simples y se han comprobado sus efectos en el documento resultante." },
+        { "id": "dwes-ce-2-6", "code": "RA2.f", "description": "Se han utilizado directivas para modificar el comportamiento predeterminado." },
+        { "id": "dwes-ce-2-7", "code": "RA2.g", "description": "Se han utilizado los distintos tipos de variables y operadores disponibles en el lenguaje." },
+        { "id": "dwes-ce-2-8", "code": "RA2.h", "description": "Se han identificado los ambitos de utilizacion de las variables." }
+      ]
+    },
+    {
+      "id": "dwes-lo-3",
+      "moduleId": "module-daw-0613",
+      "code": "RA3",
+      "description": "Escribe bloques de sentencias embebidos en lenguajes de marcas, seleccionando y utilizando las estructuras de programacion.",
+      "weight": 11.111,
+      "assessmentCriteria": [
+        { "id": "dwes-ce-3-1", "code": "RA3.a", "description": "Se han utilizado mecanismos de decision en la creacion de bloques de sentencias." },
+        { "id": "dwes-ce-3-2", "code": "RA3.b", "description": "Se han utilizado bucles y se ha verificado su funcionamiento." },
+        { "id": "dwes-ce-3-3", "code": "RA3.c", "description": "Se han utilizado matrices (arrays) para almacenar y recuperar conjuntos de datos." },
+        { "id": "dwes-ce-3-4", "code": "RA3.d", "description": "Se han creado y utilizado funciones." },
+        { "id": "dwes-ce-3-5", "code": "RA3.e", "description": "Se han utilizado formularios web para interactuar con el usuario del navegador web." },
+        { "id": "dwes-ce-3-6", "code": "RA3.f", "description": "Se han empleado metodos para recuperar la informacion introducida en el formulario." },
+        { "id": "dwes-ce-3-7", "code": "RA3.g", "description": "Se han anadido comentarios al codigo." }
+      ]
+    },
+    {
+      "id": "dwes-lo-4",
+      "moduleId": "module-daw-0613",
+      "code": "RA4",
+      "description": "Desarrolla aplicaciones web embebidas en lenguajes de marcas analizando e incorporando funcionalidades segun especificaciones.",
+      "weight": 11.111,
+      "assessmentCriteria": [
+        { "id": "dwes-ce-4-1", "code": "RA4.a", "description": "Se han identificado los mecanismos disponibles para el mantenimiento de la informacion que concierne a un cliente web concreto y se han senalado sus ventajas." },
+        { "id": "dwes-ce-4-2", "code": "RA4.b", "description": "Se han utilizado mecanismos para mantener el estado de las aplicaciones web." },
+        { "id": "dwes-ce-4-3", "code": "RA4.c", "description": "Se han utilizado mecanismos para almacenar informacion en el cliente web y para recuperar su contenido." },
+        { "id": "dwes-ce-4-4", "code": "RA4.d", "description": "Se han identificado y caracterizado los mecanismos disponibles para la autentificacion de usuarios." },
+        { "id": "dwes-ce-4-5", "code": "RA4.e", "description": "Se han escrito aplicaciones que integren mecanismos de autentificacion de usuarios." },
+        { "id": "dwes-ce-4-6", "code": "RA4.f", "description": "Se han utilizado herramientas y entornos para facilitar la programacion, prueba y depuracion del codigo." }
+      ]
+    },
+    {
+      "id": "dwes-lo-5",
+      "moduleId": "module-daw-0613",
+      "code": "RA5",
+      "description": "Desarrolla aplicaciones web identificando y aplicando mecanismos para separar el codigo de presentacion de la logica de negocio.",
+      "weight": 11.111,
+      "assessmentCriteria": [
+        { "id": "dwes-ce-5-1", "code": "RA5.a", "description": "Se han identificado las ventajas de separar la logica de negocio de los aspectos de presentacion de la aplicacion." },
+        { "id": "dwes-ce-5-2", "code": "RA5.b", "description": "Se han analizado y utilizado mecanismos y frameworks que permiten realizar esta separacion y sus caracteristicas principales." },
+        { "id": "dwes-ce-5-3", "code": "RA5.c", "description": "Se han utilizado objetos y controles en el servidor para generar el aspecto visual de la aplicacion web en el cliente." },
+        { "id": "dwes-ce-5-4", "code": "RA5.d", "description": "Se han utilizado formularios generados de forma dinamica para responder a los eventos de la aplicacion web." },
+        { "id": "dwes-ce-5-5", "code": "RA5.e", "description": "Se han identificado y aplicado los parametros relativos a la configuracion de la aplicacion web." },
+        { "id": "dwes-ce-5-6", "code": "RA5.f", "description": "Se han escrito aplicaciones web con mantenimiento de estado y separacion de la logica de negocio." },
+        { "id": "dwes-ce-5-7", "code": "RA5.g", "description": "Se han aplicado los principios y patrones de diseno de la programacion orientada a objetos." },
+        { "id": "dwes-ce-5-8", "code": "RA5.h", "description": "Se ha probado y documentado el codigo." }
+      ]
+    },
+    {
+      "id": "dwes-lo-6",
+      "moduleId": "module-daw-0613",
+      "code": "RA6",
+      "description": "Desarrolla aplicaciones web de acceso a almacenes de datos, aplicando medidas para mantener la seguridad y la integridad de la informacion.",
+      "weight": 11.111,
+      "assessmentCriteria": [
+        { "id": "dwes-ce-6-1", "code": "RA6.a", "description": "Se han analizado las tecnologias que permiten el acceso mediante programacion a la informacion disponible en almacenes de datos." },
+        { "id": "dwes-ce-6-2", "code": "RA6.b", "description": "Se han creado aplicaciones que establezcan conexiones con bases de datos." },
+        { "id": "dwes-ce-6-3", "code": "RA6.c", "description": "Se ha recuperado informacion almacenada en bases de datos." },
+        { "id": "dwes-ce-6-4", "code": "RA6.d", "description": "Se ha publicado en aplicaciones web la informacion recuperada." },
+        { "id": "dwes-ce-6-5", "code": "RA6.e", "description": "Se han utilizado conjuntos de datos para almacenar la informacion." },
+        { "id": "dwes-ce-6-6", "code": "RA6.f", "description": "Se han creado aplicaciones web que permitan la actualizacion y la eliminacion de informacion disponible en una base de datos." },
+        { "id": "dwes-ce-6-7", "code": "RA6.g", "description": "Se han probado y documentado las aplicaciones web." }
+      ]
+    },
+    {
+      "id": "dwes-lo-7",
+      "moduleId": "module-daw-0613",
+      "code": "RA7",
+      "description": "Desarrolla servicios web reutilizables y accesibles mediante protocolos web, verificando su funcionamiento.",
+      "weight": 11.111,
+      "assessmentCriteria": [
+        { "id": "dwes-ce-7-1", "code": "RA7.a", "description": "Se han reconocido las caracteristicas propias y el ambito de aplicacion de los servicios Web." },
+        { "id": "dwes-ce-7-2", "code": "RA7.b", "description": "Se han reconocido las ventajas de utilizar servicios Web para proporcionar acceso a funcionalidades incorporadas a la logica de negocio de una aplicacion." },
+        { "id": "dwes-ce-7-3", "code": "RA7.c", "description": "Se han identificado las tecnologias y los protocolos implicados en la publicacion y utilizacion de servicios Web." },
+        { "id": "dwes-ce-7-4", "code": "RA7.d", "description": "Se ha programado un servicio Web." },
+        { "id": "dwes-ce-7-5", "code": "RA7.e", "description": "Se ha creado el documento de descripcion del servicio Web." },
+        { "id": "dwes-ce-7-6", "code": "RA7.f", "description": "Se ha verificado el funcionamiento del servicio Web." },
+        { "id": "dwes-ce-7-7", "code": "RA7.g", "description": "Se ha consumido el servicio Web." }
+      ]
+    },
+    {
+      "id": "dwes-lo-8",
+      "moduleId": "module-daw-0613",
+      "code": "RA8",
+      "description": "Genera paginas web dinamicas analizando y utilizando tecnologias y frameworks del servidor web que anadan codigo al lenguaje de marcas.",
+      "weight": 11.111,
+      "assessmentCriteria": [
+        { "id": "dwes-ce-8-1", "code": "RA8.a", "description": "Se han identificado las diferencias entre la ejecucion de codigo en el servidor y en el cliente web." },
+        { "id": "dwes-ce-8-2", "code": "RA8.b", "description": "Se han reconocido las ventajas de unir ambas tecnologias en el proceso de desarrollo de programas." },
+        { "id": "dwes-ce-8-3", "code": "RA8.c", "description": "Se han identificado las tecnologias y frameworks relacionadas con la generacion por parte del servidor de paginas web con guiones embebidos." },
+        { "id": "dwes-ce-8-4", "code": "RA8.d", "description": "Se han utilizado estas tecnologias y frameworks para generar paginas web que incluyan interaccion con el usuario." },
+        { "id": "dwes-ce-8-5", "code": "RA8.e", "description": "Se han utilizado estas tecnologias y frameworks, para generar paginas web que incluyan verificacion de formularios." },
+        { "id": "dwes-ce-8-6", "code": "RA8.f", "description": "Se han utilizado estas tecnologias y frameworks para generar paginas web que incluyan modificacion dinamica de su contenido y su estructura." },
+        { "id": "dwes-ce-8-7", "code": "RA8.g", "description": "Se han aplicado estas tecnologias y frameworks en la programacion de aplicaciones web." },
+        { "id": "dwes-ce-8-8", "code": "RA8.h", "description": "Se han identificado las tecnologias y frameworks relacionadas con la generacion por parte del servidor de paginas web con guiones embebidos." }
+      ]
+    },
+    {
+      "id": "dwes-lo-9",
+      "moduleId": "module-daw-0613",
+      "code": "RA9",
+      "description": "Desarrolla aplicaciones web hibridas seleccionando y utilizando tecnologias, frameworks servidor y repositorios heterogeneos de informacion.",
+      "weight": 11.111,
+      "assessmentCriteria": [
+        { "id": "dwes-ce-9-1", "code": "RA9.a", "description": "Se han reconocido las ventajas que proporciona la reutilizacion de codigo y el aprovechamiento de informacion ya existente." },
+        { "id": "dwes-ce-9-2", "code": "RA9.b", "description": "Se han identificado tecnologias y frameworks aplicables en la creacion de aplicaciones web hibridas." },
+        { "id": "dwes-ce-9-3", "code": "RA9.c", "description": "Se ha creado una aplicacion web que recupere y procese repositorios de informacion ya existentes." },
+        { "id": "dwes-ce-9-4", "code": "RA9.d", "description": "Se han creado repositorios especificos a partir de informacion existente en almacenes de informacion." },
+        { "id": "dwes-ce-9-5", "code": "RA9.e", "description": "Se han utilizado librerias de codigo y frameworks para incorporar funcionalidades especificas a una aplicacion web." },
+        { "id": "dwes-ce-9-6", "code": "RA9.f", "description": "Se han programado servicios y aplicaciones web utilizando como base informacion y codigo generados por terceros." },
+        { "id": "dwes-ce-9-7", "code": "RA9.g", "description": "Se han analizado y utilizado librerias de codigo relacionadas con Big Data e inteligencia de negocios, para incorporar analisis e inteligencia de datos proveniente de repositorios." }
+      ]
+    }
+  ],
+  "contentUnits": [
+    { "id": "dwes-unit-1", "moduleId": "module-daw-0613", "code": "UT_01", "title": "Plataformas de programacion web en entorno servidor. Aplicaciones LAMP", "description": "Caracteristicas de la programacion web, paginas estaticas y dinamicas, aplicaciones web, ejecucion de codigo en servidor y cliente, tecnologias del lado servidor, arquitecturas y plataformas, integracion con el servidor web, lenguajes, codigo embebido, herramientas de programacion, instalacion de Visual Studio Code y plataformas LAMP, programacion web con Java y PHP, variables, tipos de datos, expresiones, operadores y ambito de variables." },
+    { "id": "dwes-unit-2", "moduleId": "module-daw-0613", "code": "UT_02", "title": "Caracteristicas del lenguaje PHP", "description": "Elementos del lenguaje PHP, generacion de HTML, cadenas, funciones, variables especiales, estructuras de control, condicionales, bucles, funciones, inclusion de ficheros, argumentos, arrays, formularios web, procesamiento y validacion de formularios y subida de archivos." },
+    { "id": "dwes-unit-3", "moduleId": "module-daw-0613", "code": "UT_03", "title": "Trabajar con bases de datos en PHP", "description": "Acceso a bases de datos desde PHP, MySQL, instalacion y configuracion, herramientas de administracion, phpMyAdmin, MySQLi, conexiones, consultas, transacciones, resultados, consultas preparadas, PDO, manejo de errores y excepciones." },
+    { "id": "dwes-unit-4", "moduleId": "module-daw-0613", "code": "UT_04", "title": "Desarrollo de aplicaciones web con PHP", "description": "Autentificacion de usuarios, control de acceso, mecanismos de autentificacion, incorporacion de autentificacion a aplicaciones web, cookies, manejo de sesiones, configuracion, inicio y fin de sesion, gestion de informacion de sesion y herramientas de depuracion." },
+    { "id": "dwes-unit-5", "moduleId": "module-daw-0613", "code": "UT_05", "title": "Programacion orientada a objetos en PHP", "description": "Orientacion a objetos en PHP, clases, objetos, mantenimiento del estado, herencia, interfaces, programacion en capas, namespaces, Composer, separacion de logica de negocio y generacion de interfaces de usuario." },
+    { "id": "dwes-unit-6", "moduleId": "module-daw-0613", "code": "UT_06", "title": "Servicios web", "description": "Servicios web, caracteristicas, intercambio de informacion con SOAP, descripcion del servicio con WSDL, extension PHP SOAP, utilizacion y creacion de servicios web." },
+    { "id": "dwes-unit-7", "moduleId": "module-daw-0613", "code": "UT_07", "title": "Aplicaciones web dinamicas: PHP y JavaScript", "description": "Programacion del cliente web, paginas dinamicas, JavaScript, AJAX, integracion PHP y JavaScript, Xajax y JQuery4PHP." },
+    { "id": "dwes-unit-8", "moduleId": "module-daw-0613", "code": "UT_08", "title": "Aplicaciones web hibridas", "description": "Reutilizacion de codigo e informacion, caracteristicas de aplicaciones web hibridas, repositorios de informacion, OAuth2, JSON, XML, Yahoo! Weather, Bing Maps, Google Tasks y aplicaciones hibridas de geocodificacion y gestion de repartos." }
+  ],
+  "contentUnitLearningOutcomeMappings": [
+    { "contentUnitId": "dwes-unit-1", "learningOutcomeId": "dwes-lo-1" },
+    { "contentUnitId": "dwes-unit-1", "learningOutcomeId": "dwes-lo-2" },
+    { "contentUnitId": "dwes-unit-2", "learningOutcomeId": "dwes-lo-3" },
+    { "contentUnitId": "dwes-unit-2", "learningOutcomeId": "dwes-lo-4" },
+    { "contentUnitId": "dwes-unit-3", "learningOutcomeId": "dwes-lo-6" },
+    { "contentUnitId": "dwes-unit-4", "learningOutcomeId": "dwes-lo-4" },
+    { "contentUnitId": "dwes-unit-5", "learningOutcomeId": "dwes-lo-5" },
+    { "contentUnitId": "dwes-unit-6", "learningOutcomeId": "dwes-lo-7" },
+    { "contentUnitId": "dwes-unit-7", "learningOutcomeId": "dwes-lo-8" },
+    { "contentUnitId": "dwes-unit-8", "learningOutcomeId": "dwes-lo-9" }
+  ]
+}
